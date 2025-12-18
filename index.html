@@ -1,0 +1,1144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>n8n Session Request Form</title>
+
+    <!-- Tailwind CDN (for quick prototype) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              primary: {
+                50: '#ecfdf5',
+                100: '#d1fae5',
+                500: '#10b981',
+                600: '#059669',
+              },
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Inter font -->
+    <link
+      rel="preconnect"
+      href="https://fonts.googleapis.com"
+    />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="min-h-screen bg-slate-50 font-sans text-slate-900">
+    <div class="flex min-h-screen items-center justify-center px-4 py-10">
+      <div class="w-full max-w-5xl rounded-3xl bg-white shadow-[0_18px_45px_rgba(15,23,42,0.05)] ring-1 ring-slate-100">
+        <div class="grid gap-10 p-6 sm:p-10 lg:grid-cols-[1.05fr,1.45fr]">
+          <!-- Left panel: intro & progress -->
+          <aside class="space-y-10 border-b border-slate-100 pb-8 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
+            <header class="space-y-3">
+              <p class="text-xs font-medium uppercase tracking-[0.2em] text-primary-600">
+                n8n Session Request
+              </p>
+              <h1 class="text-2xl font-semibold text-slate-900">
+                n8n Session Request Form
+              </h1>
+              <p class="text-sm leading-relaxed text-slate-600">
+                Use this form to request an n8n learning or working session for your department.
+                Sessions are run by <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span>.
+                We’ll use your answers to match the session depth, format, and scope to your team.
+              </p>
+            </header>
+
+            <!-- Progress indicator -->
+            <section class="space-y-5">
+              <div class="flex items-center justify-between text-xs font-medium text-slate-500">
+                <span id="progress-label">Step 1 of 4</span>
+                <span id="progress-subtitle">Department & participants</span>
+              </div>
+              <div class="relative h-1.5 overflow-hidden rounded-full bg-slate-100">
+                <div
+                  id="progress-bar"
+                  class="h-full w-1/4 rounded-full bg-gradient-to-r from-primary-500 to-primary-600 transition-all"
+                ></div>
+              </div>
+              <ol class="space-y-3 text-xs text-slate-500">
+                <li class="flex items-start gap-2">
+                  <span
+                    class="mt-[2px] flex h-4 w-4 items-center justify-center rounded-full border text-[10px]"
+                    id="step-pill-1"
+                  >
+                    1
+                  </span>
+                  <div>
+                    <p class="font-medium text-slate-700">Department & audience</p>
+                    <p>Who is requesting and who will join.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span
+                    class="mt-[2px] flex h-4 w-4 items-center justify-center rounded-full border text-[10px]"
+                    id="step-pill-2"
+                  >
+                    2
+                  </span>
+                  <div>
+                    <p class="font-medium text-slate-700">Session focus</p>
+                    <p>Level, type, and core automation idea.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span
+                    class="mt-[2px] flex h-4 w-4 items-center justify-center rounded-full border text-[10px]"
+                    id="step-pill-3"
+                  >
+                    3
+                  </span>
+                  <div>
+                    <p class="font-medium text-slate-700">Tools & logistics</p>
+                    <p>Integrations, access, and timing.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span
+                    class="mt-[2px] flex h-4 w-4 items-center justify-center rounded-full border text-[10px]"
+                    id="step-pill-4"
+                  >
+                    4
+                  </span>
+                  <div>
+                    <p class="font-medium text-slate-700">Expectations & follow-up</p>
+                    <p>Success, constraints, and permissions.</p>
+                  </div>
+                </li>
+              </ol>
+            </section>
+          </aside>
+
+          <!-- Right panel: multi-step form -->
+          <main>
+            <form id="n8n-form" class="space-y-10">
+              <!-- Step 1: Department & participants (Sections 1–2) -->
+              <section data-step="1" class="step space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Department & participants</h2>
+                  <p class="text-xs text-slate-500">
+                    Start with the basics. We’ll ask for more detail in the next steps.
+                  </p>
+                </div>
+
+                <!-- Department & contact card -->
+                <div class="space-y-5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <p class="text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
+                    Basics
+                  </p>
+                  <div class="grid gap-4 sm:grid-cols-2">
+                  <!-- Department Name -->
+                  <div class="space-y-1.5 sm:col-span-2">
+                    <label for="department" class="block text-xs font-medium text-slate-700">
+                      Department name
+                    </label>
+                    <input
+                      id="department"
+                      name="department"
+                      type="text"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="e.g. Finance, Support, Product"
+                      required
+                    />
+                  </div>
+
+                  <!-- Primary Point of Contact -->
+                  <div class="space-y-1.5">
+                    <label for="pocName" class="block text-xs font-medium text-slate-700">
+                      Primary point of contact
+                    </label>
+                      <input
+                        id="pocName"
+                        name="pocName"
+                        type="text"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="Full name"
+                        required
+                      />
+                    <p class="text-[11px] text-slate-500">
+                      Please provide someone who will attend the session and can make decisions.
+                    </p>
+                  </div>
+
+                  <!-- Official Email Address -->
+                  <div class="space-y-1.5">
+                    <label for="pocEmail" class="block text-xs font-medium text-slate-700">
+                      Official email address
+                    </label>
+                      <input
+                        id="pocEmail"
+                        name="pocEmail"
+                        type="email"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="name@company.com"
+                        required
+                      />
+                  </div>
+
+                  <!-- Role / Designation -->
+                  <div class="space-y-1.5">
+                    <label for="pocRole" class="block text-xs font-medium text-slate-700">
+                      Role / designation
+                    </label>
+                      <input
+                        id="pocRole"
+                        name="pocRole"
+                        type="text"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="e.g. Engineering Manager"
+                        required
+                      />
+                  </div>
+                  </div>
+                </div>
+
+                <!-- Participant & audience card -->
+                <div class="space-y-5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <p class="text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
+                    Audience
+                  </p>
+                  <div class="grid gap-4 sm:grid-cols-[minmax(0,0.6fr)_minmax(0,1.4fr)] lg:grid-cols-[minmax(0,0.5fr)_minmax(0,1fr)_minmax(0,1fr)]">
+                    <div class="space-y-1.5">
+                      <label for="participants" class="block text-xs font-medium text-slate-700">
+                        Number of participants
+                      </label>
+                      <input
+                        id="participants"
+                        name="participants"
+                        type="number"
+                        min="1"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="e.g. 8"
+                        required
+                      />
+                    </div>
+
+                    <fieldset class="space-y-2 lg:col-span-1">
+                      <legend class="text-xs font-medium text-slate-700">
+                        Audience profile
+                      </legend>
+                      <p class="text-[11px] text-slate-500">
+                        Select all that apply. This helps tune the pace and depth.
+                      </p>
+                      <div class="mt-1 grid gap-2 sm:grid-cols-2">
+                        <label class="flex items-center gap-2 text-xs text-slate-700">
+                          <input
+                            type="checkbox"
+                            name="audienceProfile"
+                            value="non-technical"
+                            class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                          />
+                          <span>Non-technical</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs text-slate-700">
+                          <input
+                            type="checkbox"
+                            name="audienceProfile"
+                            value="semi-technical"
+                            class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                          />
+                          <span>Semi-technical</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs text-slate-700">
+                          <input
+                            type="checkbox"
+                            name="audienceProfile"
+                            value="technical"
+                            class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                          />
+                          <span>Technical</span>
+                        </label>
+                        <label class="flex items-center gap-2 text-xs text-slate-700">
+                          <input
+                            type="checkbox"
+                            name="audienceProfile"
+                            value="mixed"
+                            class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                          />
+                          <span>Mixed audience</span>
+                        </label>
+                      </div>
+                    </fieldset>
+
+                    <!-- Prior n8n Exposure -->
+                    <div class="space-y-1.5">
+                      <label for="priorExposure" class="block text-xs font-medium text-slate-700">
+                        Prior n8n exposure
+                      </label>
+                      <select
+                        id="priorExposure"
+                        name="priorExposure"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        required
+                      >
+                        <option value="">Select one</option>
+                        <option value="none">None</option>
+                        <option value="seen-demos">Have seen demos</option>
+                        <option value="used-existing">Have used existing workflows</option>
+                        <option value="built-independently">Have built workflows independently</option>
+                      </select>
+                      <p class="text-[11px] text-slate-500">
+                        This keeps us from pushing advanced content to first-time users.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 2: Session focus (Sections 3–5) -->
+              <section data-step="2" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Session level & focus</h2>
+                  <p class="text-xs text-slate-500">
+                    Tell us how deep the session should go and what kind of work you want to do.
+                  </p>
+                </div>
+
+                <!-- Level & type -->
+                <div class="space-y-5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="grid gap-4 sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+                  <div class="space-y-1.5">
+                    <label for="sessionLevel" class="block text-xs font-medium text-slate-700">
+                      Requested session level
+                    </label>
+                    <select
+                      id="sessionLevel"
+                      name="sessionLevel"
+                      class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select level</option>
+                      <option>Basic</option>
+                      <option>Intermediate</option>
+                      <option>Advanced</option>
+                    </select>
+                  </div>
+
+                  <fieldset class="space-y-2">
+                    <legend class="text-xs font-medium text-slate-700">
+                      Type of session
+                    </legend>
+                    <p class="text-[11px] text-slate-500">
+                      You can choose more than one if needed.
+                    </p>
+                    <div class="mt-1 grid gap-2 sm:grid-cols-2">
+                      <label class="flex items-center gap-2 text-xs text-slate-700">
+                        <input
+                          type="checkbox"
+                          name="sessionType"
+                          value="live-build"
+                          class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                        />
+                        <span>Live automation build from scratch</span>
+                      </label>
+                      <label class="flex items-center gap-2 text-xs text-slate-700">
+                        <input
+                          type="checkbox"
+                          name="sessionType"
+                          value="dissect-existing"
+                          class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                        />
+                        <span>Dissect an existing automation</span>
+                      </label>
+                      <label class="flex items-center gap-2 text-xs text-slate-700">
+                        <input
+                          type="checkbox"
+                          name="sessionType"
+                          value="improve-workflow"
+                          class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                        />
+                        <span>Improve or refactor an existing workflow</span>
+                      </label>
+                      <label class="flex items-center gap-2 text-xs text-slate-700">
+                        <input
+                          type="checkbox"
+                          name="sessionType"
+                          value="conceptual"
+                          class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                        />
+                        <span>Conceptual learning &amp; best practices</span>
+                      </label>
+                      <label class="flex items-center gap-2 text-xs text-slate-700 sm:col-span-2">
+                        <input
+                          type="checkbox"
+                          name="sessionType"
+                          value="use-case-discussion"
+                          class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                        />
+                        <span>Use-case discussion and solution design</span>
+                      </label>
+                    </div>
+                  </fieldset>
+                  </div>
+                </div>
+
+                <!-- Session objective -->
+                <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <label for="primaryGoal" class="block text-xs font-medium text-slate-700">
+                    Primary goal of the session
+                  </label>
+                  <textarea
+                    id="primaryGoal"
+                    name="primaryGoal"
+                    rows="3"
+                    class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                    placeholder='For example: “Enable the team to independently build Google Sheet → Email automations.”'
+                    required
+                  ></textarea>
+                </div>
+
+                <fieldset class="space-y-2 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <legend class="text-xs font-medium text-slate-700">
+                    What do you want participants to walk away with?
+                  </legend>
+                  <p class="text-[11px] text-slate-500">
+                    Choose the outcomes that matter most for this session.
+                  </p>
+                  <div class="mt-1 grid gap-2 sm:grid-cols-2">
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="walkaway"
+                        value="conceptual-understanding"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Conceptual understanding</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="walkaway"
+                        value="build-simple"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Ability to build simple automations</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="walkaway"
+                        value="modify-existing"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Ability to modify existing workflows</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="walkaway"
+                        value="production-ready"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>A production-ready automation</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700 sm:col-span-2">
+                      <input
+                        type="checkbox"
+                        name="walkaway"
+                        value="confidence-ui"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Confidence using the n8n UI</span>
+                    </label>
+                  </div>
+                </fieldset>
+
+                <!-- Automation focus -->
+                <div class="space-y-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="space-y-1.5">
+                    <label for="automationFocus" class="block text-xs font-medium text-slate-700">
+                      What should be built or covered?
+                    </label>
+                    <select
+                      id="automationFocus"
+                      name="automationFocus"
+                      class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select one</option>
+                      <option value="build-trainer-led">Build an automation live (trainer-led)</option>
+                      <option value="analyze-existing">Analyze an existing automation</option>
+                      <option value="team-suggested">Build an automation suggested by the team</option>
+                      <option value="multiple-examples">Explore multiple small examples</option>
+                    </select>
+                  </div>
+
+                  <!-- Conditional: team-suggested description -->
+                  <div
+                    id="teamSuggestedContainer"
+                    class="space-y-1.5 hidden"
+                  >
+                    <label for="teamSuggestedDescription" class="block text-xs font-medium text-slate-700">
+                      If team-suggested, describe the automation idea
+                    </label>
+                    <textarea
+                      id="teamSuggestedDescription"
+                      name="teamSuggestedDescription"
+                      rows="3"
+                      class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                      placeholder="Briefly describe the trigger, key steps, and expected outcome."
+                    ></textarea>
+                  </div>
+
+                  <!-- Existing workflow available -->
+                  <div class="grid gap-4 sm:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)]">
+                    <div class="space-y-1.5">
+                      <label class="block text-xs font-medium text-slate-700">
+                        Existing workflow available?
+                      </label>
+                      <div class="mt-1 flex gap-4 text-xs text-slate-700">
+                        <label class="inline-flex items-center gap-2">
+                          <input
+                            type="radio"
+                            name="existingWorkflow"
+                            value="yes"
+                            class="h-3.5 w-3.5 border-slate-300 text-primary-600 focus:ring-primary-500"
+                          />
+                          <span>Yes</span>
+                        </label>
+                        <label class="inline-flex items-center gap-2">
+                          <input
+                            type="radio"
+                            name="existingWorkflow"
+                            value="no"
+                            class="h-3.5 w-3.5 border-slate-300 text-primary-600 focus:ring-primary-500"
+                            checked
+                          />
+                          <span>No</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div
+                      id="workflowUploadContainer"
+                      class="space-y-1.5 hidden"
+                    >
+                      <label for="workflowFile" class="block text-xs font-medium text-slate-700">
+                        Upload workflow JSON or screenshots
+                      </label>
+                      <input
+                        id="workflowFile"
+                        name="workflowFile"
+                        type="file"
+                        class="block w-full rounded-lg border border-dashed border-slate-300 bg-slate-50 px-3 py-2 text-xs text-slate-700 shadow-sm outline-none file:mr-3 file:rounded-md file:border-0 file:bg-primary-50 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-primary-700 hover:file:bg-primary-100 focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                        multiple
+                      />
+                      <p class="text-[11px] text-slate-500">
+                        Attaching context makes it much easier to design a practical session.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 3: Tools & logistics (Sections 6–7) -->
+              <section data-step="3" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Tools & logistics</h2>
+                  <p class="text-xs text-slate-500">
+                    Help us prepare the right integrations, access, and timing upfront.
+                  </p>
+                </div>
+
+                <!-- Tools & integrations -->
+                <fieldset class="space-y-2 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <legend class="text-xs font-medium text-slate-700">
+                    Tools to be used in the session
+                  </legend>
+                  <p class="text-[11px] text-slate-500">
+                    Select everything that you expect to see in the workflows.
+                  </p>
+                  <div class="mt-1 grid gap-2 sm:grid-cols-2">
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="tools"
+                        value="google-sheets"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Google Sheets</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="tools"
+                        value="gmail"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Gmail</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="tools"
+                        value="slack-teams"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Slack / Teams</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="tools"
+                        value="supabase"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Supabase</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="tools"
+                        value="webhooks"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Webhooks</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="tools"
+                        value="internal-tools"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Internal tools</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700 sm:col-span-2">
+                      <input
+                        type="checkbox"
+                        name="tools"
+                        value="other"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Other</span>
+                    </label>
+                  </div>
+                </fieldset>
+
+                <!-- Credentials / access ready -->
+                <div class="grid gap-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="space-y-1.5">
+                    <label for="credentialsReady" class="block text-xs font-medium text-slate-700">
+                      Credentials or access ready?
+                    </label>
+                    <select
+                      id="credentialsReady"
+                      name="credentialsReady"
+                      class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select one</option>
+                      <option>Yes</option>
+                      <option>Partially</option>
+                      <option>No (needs setup first)</option>
+                    </select>
+                  </div>
+
+                  <p class="text-[11px] text-slate-500">
+                    Having accounts and API credentials ready avoids delays during the live session.
+                    If “No”, we can use more generic or demo flows.
+                  </p>
+                </div>
+
+                <!-- Format & logistics -->
+                <div class="grid gap-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:grid-cols-2 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="space-y-1.5">
+                    <label for="sessionFormat" class="block text-xs font-medium text-slate-700">
+                      Preferred session format
+                    </label>
+                    <select
+                      id="sessionFormat"
+                      name="sessionFormat"
+                      class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select format</option>
+                      <option>Fully hands-on</option>
+                      <option>Demo + explanation</option>
+                      <option>Hybrid</option>
+                    </select>
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="sessionDuration" class="block text-xs font-medium text-slate-700">
+                      Preferred duration
+                    </label>
+                    <select
+                      id="sessionDuration"
+                      name="sessionDuration"
+                      class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select duration</option>
+                      <option>60 minutes</option>
+                      <option>90 minutes</option>
+                      <option>120 minutes</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Date range -->
+                <div class="grid gap-4 sm:grid-cols-2">
+                  <div class="space-y-1.5">
+                    <label for="dateFrom" class="block text-xs font-medium text-slate-700">
+                      Preferred date range (from)
+                    </label>
+                    <input
+                      id="dateFrom"
+                      name="dateFrom"
+                      type="date"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    />
+                  </div>
+                  <div class="space-y-1.5">
+                    <label for="dateTo" class="block text-xs font-medium text-slate-700">
+                      Preferred date range (to)
+                    </label>
+                    <input
+                      id="dateTo"
+                      name="dateTo"
+                      type="date"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    />
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 4: Expectations & follow-up (Sections 8–10 + Q1–Q3) -->
+              <section data-step="4" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Constraints, expectations & follow-up</h2>
+                  <p class="text-xs text-slate-500">
+                    Keep this realistic and outcome-focused so we can design the right session.
+                  </p>
+                </div>
+
+                <!-- Two-column layout: left = constraints/success, right = automation prefs + acknowledgement -->
+                <div class="grid gap-6 md:grid-cols-2">
+                  <!-- Left column -->
+                  <div class="space-y-5">
+                    <!-- Constraints & time-critical -->
+                    <div class="space-y-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                      <div class="space-y-1.5">
+                        <label class="block text-xs font-medium text-slate-700">
+                          Is this session time‑critical?
+                        </label>
+                        <div class="mt-1 flex gap-4 text-xs text-slate-700">
+                          <label class="inline-flex items-center gap-2">
+                            <input
+                              type="radio"
+                              name="timeCritical"
+                              value="yes"
+                              class="h-3.5 w-3.5 border-slate-300 text-primary-600 focus:ring-primary-500"
+                            />
+                            <span>Yes</span>
+                          </label>
+                          <label class="inline-flex items-center gap-2">
+                            <input
+                              type="radio"
+                              name="timeCritical"
+                              value="no"
+                              class="h-3.5 w-3.5 border-slate-300 text-primary-600 focus:ring-primary-500"
+                              checked
+                            />
+                            <span>No</span>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="space-y-1.5">
+                        <label for="learningOrImplementation" class="block text-xs font-medium text-slate-700">
+                          Is this for learning or immediate implementation?
+                        </label>
+                        <select
+                          id="learningOrImplementation"
+                          name="learningOrImplementation"
+                          class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                          required
+                        >
+                          <option value="">Select one</option>
+                          <option>Learning only</option>
+                          <option>Pilot</option>
+                          <option>Production-ready outcome</option>
+                        </select>
+                      </div>
+
+                      <div class="space-y-1.5">
+                        <label for="constraints" class="block text-xs font-medium text-slate-700">
+                          Any constraints we should know?
+                        </label>
+                        <textarea
+                          id="constraints"
+                          name="constraints"
+                          rows="3"
+                          class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                          placeholder="For example: compliance restrictions, data sensitivity, strict timelines, or tools that cannot be used."
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <!-- Success definition -->
+                    <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                      <label for="successDefinition" class="block text-xs font-medium text-slate-700">
+                        How will you define this session as successful?
+                      </label>
+                      <textarea
+                        id="successDefinition"
+                        name="successDefinition"
+                        rows="3"
+                        class="block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                        placeholder="For example: &quot;At least 3 team members can independently build and modify a key workflow after the session.&quot;"
+                        required
+                      ></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Right column -->
+                  <div class="space-y-5">
+                    <!-- Follow-up & recording -->
+                    <div class="space-y-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                      <div class="space-y-1.5">
+                        <label for="followUp" class="block text-xs font-medium text-slate-700">
+                          Follow‑up expectation
+                        </label>
+                        <select
+                          id="followUp"
+                          name="followUp"
+                          class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                          required
+                        >
+                          <option value="">Select one</option>
+                          <option>No follow-up needed</option>
+                          <option>One follow-up session</option>
+                          <option>Ongoing support required</option>
+                        </select>
+                      </div>
+
+                      <div class="space-y-1.5">
+                        <label class="block text-xs font-medium text-slate-700">
+                          Recording permission
+                        </label>
+                        <div class="mt-1 flex gap-4 text-xs text-slate-700">
+                          <label class="inline-flex items-center gap-2">
+                            <input
+                              type="radio"
+                              name="recordingPermission"
+                              value="yes"
+                              class="h-3.5 w-3.5 border-slate-300 text-primary-600 focus:ring-primary-500"
+                            />
+                            <span>Yes, you can record the session</span>
+                          </label>
+                          <label class="inline-flex items-center gap-2">
+                            <input
+                              type="radio"
+                              name="recordingPermission"
+                              value="no"
+                              class="h-3.5 w-3.5 border-slate-300 text-primary-600 focus:ring-primary-500"
+                            />
+                            <span>No recording</span>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Additional notes / generic preferences -->
+                    <div class="space-y-2 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                      <label for="extraNotes" class="block text-xs font-semibold text-slate-900">
+                        Additional notes or preferences (optional)
+                      </label>
+                      <p class="text-[11px] text-slate-500">
+                        Anything else that would help Team D.A.R design the session for your team
+                        (examples, tools, constraints, or follow-up ideas).
+                      </p>
+                      <textarea
+                        id="extraNotes"
+                        name="extraNotes"
+                        rows="3"
+                        class="mt-1 block w-full rounded-lg border border-slate-200 bg-slate-50 px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:bg-white focus:ring-2 focus:ring-primary-100"
+                        placeholder="Share any extra context, preferences, or ideas."
+                      ></textarea>
+                    </div>
+
+                    <!-- Acknowledgement -->
+                    <div class="space-y-2 rounded-2xl border border-slate-100 bg-white px-4 py-4 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                      <label class="flex items-start gap-2 text-xs text-slate-700">
+                        <input
+                          type="checkbox"
+                          name="acknowledgement"
+                          id="acknowledgement"
+                          class="mt-[2px] h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                          required
+                        />
+                        <span>
+                          I understand the session scope and depth will be finalized based on feasibility
+                          and participant level.
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Navigation -->
+              <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  id="backButton"
+                  class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <span aria-hidden="true" class="text-slate-400">‹</span>
+                  Previous
+                </button>
+
+                <button
+                  type="button"
+                  id="nextButton"
+                  class="inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                >
+                  <span id="nextButtonLabel">Next</span>
+                  <span aria-hidden="true" id="nextButtonIcon">›</span>
+                </button>
+
+                <button
+                  type="submit"
+                  id="submitButton"
+                  class="hidden inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                >
+                  Submit request
+                </button>
+              </div>
+            </form>
+
+            <!-- Submission toast (for now) -->
+            <div
+              id="successToast"
+              class="pointer-events-none fixed inset-x-0 top-4 z-20 flex justify-center px-4 opacity-0 transition"
+            >
+              <div class="pointer-events-auto flex max-w-md items-start gap-3 rounded-xl bg-slate-900 px-4 py-3 text-xs text-slate-50 shadow-lg ring-1 ring-slate-800/50">
+                <div class="mt-[3px] h-1.5 w-1.5 rounded-full bg-emerald-400"></div>
+                <div>
+                  <p class="font-medium">Request submitted</p>
+                  <p class="mt-0.5 text-[11px] text-slate-300">
+                    We'll review your request and get back to you soon.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </main>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const steps = Array.from(document.querySelectorAll('.step'));
+      const progressBar = document.getElementById('progress-bar');
+      const progressLabel = document.getElementById('progress-label');
+      const progressSubtitle = document.getElementById('progress-subtitle');
+      const backButton = document.getElementById('backButton');
+      const nextButton = document.getElementById('nextButton');
+      const nextButtonLabel = document.getElementById('nextButtonLabel');
+      const nextButtonIcon = document.getElementById('nextButtonIcon');
+      const submitButton = document.getElementById('submitButton');
+      const form = document.getElementById('n8n-form');
+      const successToast = document.getElementById('successToast');
+      const teamSuggestedSelect = document.getElementById('automationFocus');
+      const teamSuggestedContainer = document.getElementById('teamSuggestedContainer');
+      const existingWorkflowRadios = document.querySelectorAll('input[name="existingWorkflow"]');
+      const workflowUploadContainer = document.getElementById('workflowUploadContainer');
+
+      const stepPills = [
+        document.getElementById('step-pill-1'),
+        document.getElementById('step-pill-2'),
+        document.getElementById('step-pill-3'),
+        document.getElementById('step-pill-4'),
+      ];
+
+      const subtitles = [
+        'Department & participants',
+        'Session level & focus',
+        'Tools & logistics',
+        'Constraints & follow-up',
+      ];
+
+      let currentStep = 1;
+      let isSubmitting = false;
+
+      // Google Apps Script Web App endpoint that appends submissions to a Sheet
+      const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbw2jR4AlxlEMl_-uwA-RMhkB5YyYtZsx_eEg9CBySusGXmYTA1HnQPdBuehnRRypQNF/exec';
+
+      function updateStep(newStep) {
+        currentStep = newStep;
+
+        steps.forEach((section) => {
+          section.classList.toggle('hidden', Number(section.dataset.step) !== currentStep);
+        });
+
+        progressLabel.textContent = `Step ${currentStep} of ${steps.length}`;
+        progressSubtitle.textContent = subtitles[currentStep - 1];
+
+        const percentage = (currentStep / steps.length) * 100;
+        progressBar.style.width = `${percentage}%`;
+
+        stepPills.forEach((pill, index) => {
+          const stepIndex = index + 1;
+          pill.classList.remove('bg-primary-600', 'text-white', 'border-primary-600');
+          pill.classList.remove('bg-slate-900', 'text-slate-50', 'border-slate-900');
+          pill.classList.remove('bg-slate-100', 'text-slate-500', 'border-slate-200');
+
+          if (stepIndex < currentStep) {
+            pill.classList.add('bg-primary-600', 'text-white', 'border-primary-600');
+          } else if (stepIndex === currentStep) {
+            pill.classList.add('bg-slate-900', 'text-slate-50', 'border-slate-900');
+          } else {
+            pill.classList.add('bg-slate-100', 'text-slate-500', 'border-slate-200');
+          }
+        });
+
+        backButton.disabled = currentStep === 1 || isSubmitting;
+
+        if (currentStep === steps.length) {
+          nextButton.classList.add('hidden');
+          submitButton.classList.remove('hidden');
+        } else {
+          nextButton.classList.remove('hidden');
+          submitButton.classList.add('hidden');
+          nextButtonLabel.textContent = 'Next';
+          nextButtonIcon.textContent = '›';
+        }
+      }
+
+      function setSubmitting(submitting) {
+        isSubmitting = submitting;
+
+        backButton.disabled = currentStep === 1 || submitting;
+        nextButton.disabled = submitting;
+        submitButton.disabled = submitting;
+
+        if (submitting) {
+          submitButton.classList.add('opacity-60', 'cursor-wait');
+          submitButton.textContent = 'Submitting…';
+        } else {
+          submitButton.classList.remove('opacity-60', 'cursor-wait');
+          submitButton.textContent = 'Submit request';
+        }
+      }
+
+      function validateCurrentStep() {
+        const section = steps[currentStep - 1];
+        const requiredFields = Array.from(section.querySelectorAll('[required]'));
+        for (const field of requiredFields) {
+          if (!field.checkValidity()) {
+            field.reportValidity();
+            return false;
+          }
+        }
+        return true;
+      }
+
+      backButton.addEventListener('click', () => {
+        if (currentStep > 1) {
+          updateStep(currentStep - 1);
+        }
+      });
+
+      nextButton.addEventListener('click', () => {
+        if (!validateCurrentStep()) return;
+        if (currentStep < steps.length) {
+          updateStep(currentStep + 1);
+        }
+      });
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (isSubmitting) return;
+        if (!validateCurrentStep()) return;
+
+        const formData = new FormData(form);
+        const payload = {};
+        formData.forEach((value, key) => {
+          if (payload[key] === undefined) {
+            payload[key] = value;
+          } else if (Array.isArray(payload[key])) {
+            payload[key].push(value);
+          } else {
+            payload[key] = [payload[key], value];
+          }
+        });
+
+        try {
+          setSubmitting(true);
+          if (!SUBMIT_ENDPOINT || !SUBMIT_ENDPOINT.startsWith('http')) {
+            throw new Error('Submit endpoint is not configured.');
+          }
+
+          // Use no-cors so the browser doesn't block the request to Apps Script.
+          // We treat this as "fire-and-forget" and don't rely on the response.
+          await fetch(SUBMIT_ENDPOINT, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(payload),
+          });
+
+          successToast.classList.remove('opacity-0');
+          successToast.classList.add('opacity-100');
+
+          setTimeout(() => {
+            successToast.classList.remove('opacity-100');
+            successToast.classList.add('opacity-0');
+          }, 3200);
+
+          form.reset();
+          updateStep(1);
+        } catch (error) {
+          console.error('Error submitting form', error);
+          alert('Something went wrong while submitting. Please check the browser console for details or contact the team.');
+        } finally {
+          setSubmitting(false);
+        }
+      });
+
+      // Conditional logic for team-suggested automation
+      teamSuggestedSelect.addEventListener('change', () => {
+        if (teamSuggestedSelect.value === 'team-suggested') {
+          teamSuggestedContainer.classList.remove('hidden');
+          teamSuggestedContainer.querySelector('textarea').setAttribute('required', 'required');
+        } else {
+          teamSuggestedContainer.classList.add('hidden');
+          teamSuggestedContainer.querySelector('textarea').removeAttribute('required');
+        }
+      });
+
+      // Conditional logic for existing workflow upload
+      existingWorkflowRadios.forEach((radio) => {
+        radio.addEventListener('change', () => {
+          if (radio.value === 'yes' && radio.checked) {
+            workflowUploadContainer.classList.remove('hidden');
+          } else if (radio.value === 'no' && radio.checked) {
+            workflowUploadContainer.classList.add('hidden');
+          }
+        });
+      });
+
+      // Initialize state
+      updateStep(1);
+    </script>
+  </body>
+</html>
