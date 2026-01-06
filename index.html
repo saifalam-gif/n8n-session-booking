@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>n8n Session Request Form</title>
+    <title>n8n Request Forms</title>
 
     <!-- Tailwind CDN (for quick prototype) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -41,24 +41,51 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
       rel="stylesheet"
     />
+    <style>
+      .tab-button.active {
+        border-bottom-color: rgb(5, 150, 105);
+        color: rgb(5, 150, 105);
+      }
+    </style>
   </head>
   <body class="min-h-screen bg-slate-50 font-sans text-slate-900">
     <div class="flex min-h-screen items-center justify-center px-4 py-10">
       <div class="w-full max-w-5xl rounded-3xl bg-white shadow-[0_18px_45px_rgba(15,23,42,0.05)] ring-1 ring-slate-100">
+        <!-- Tab Navigation -->
+        <div class="border-b border-slate-100 px-6 pt-6 sm:px-10 sm:pt-10">
+          <div class="flex gap-2">
+            <button
+              type="button"
+              id="tab-session"
+              class="tab-button active rounded-t-lg border-b-2 border-transparent px-4 py-2 text-xs font-medium text-slate-600 transition-colors hover:text-slate-900"
+              data-tab="session"
+            >
+              Session Request
+            </button>
+            <button
+              type="button"
+              id="tab-automation"
+              class="tab-button rounded-t-lg border-b-2 border-transparent px-4 py-2 text-xs font-medium text-slate-600 transition-colors hover:text-slate-900"
+              data-tab="automation"
+            >
+              Automation Request
+            </button>
+          </div>
+        </div>
         <div class="grid gap-10 p-6 sm:p-10 lg:grid-cols-[1.05fr,1.45fr]">
           <!-- Left panel: intro & progress -->
           <aside class="space-y-10 border-b border-slate-100 pb-8 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
             <header class="space-y-3">
-              <p class="text-xs font-medium uppercase tracking-[0.2em] text-primary-600">
+              <p class="text-xs font-medium uppercase tracking-[0.2em] text-primary-600" id="header-badge">
                 n8n Session Request
               </p>
-              <h1 class="text-2xl font-semibold text-slate-900">
+              <h1 class="text-2xl font-semibold text-slate-900" id="header-title">
                 n8n Session Request Form
               </h1>
-              <p class="text-sm leading-relaxed text-slate-600">
+              <p class="text-sm leading-relaxed text-slate-600" id="header-description">
                 Use this form to request an n8n learning or working session for your department.
                 Sessions are run by <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span>.
-                We’ll use your answers to match the session depth, format, and scope to your team.
+                We'll use your answers to match the session depth, format, and scope to your team.
               </p>
             </header>
 
@@ -83,8 +110,8 @@
                     1
                   </span>
                   <div>
-                    <p class="font-medium text-slate-700">Department & audience</p>
-                    <p>Who is requesting and who will join.</p>
+                    <p class="font-medium text-slate-700" id="step-title-1">Department & audience</p>
+                    <p id="step-desc-1">Who is requesting and who will join.</p>
                   </div>
                 </li>
                 <li class="flex items-start gap-2">
@@ -95,8 +122,8 @@
                     2
                   </span>
                   <div>
-                    <p class="font-medium text-slate-700">Session focus</p>
-                    <p>Level, type, and core automation idea.</p>
+                    <p class="font-medium text-slate-700" id="step-title-2">Session focus</p>
+                    <p id="step-desc-2">Level, type, and core automation idea.</p>
                   </div>
                 </li>
                 <li class="flex items-start gap-2">
@@ -107,8 +134,8 @@
                     3
                   </span>
                   <div>
-                    <p class="font-medium text-slate-700">Tools & logistics</p>
-                    <p>Integrations, access, and timing.</p>
+                    <p class="font-medium text-slate-700" id="step-title-3">Tools & logistics</p>
+                    <p id="step-desc-3">Integrations, access, and timing.</p>
                   </div>
                 </li>
                 <li class="flex items-start gap-2">
@@ -119,8 +146,20 @@
                     4
                   </span>
                   <div>
-                    <p class="font-medium text-slate-700">Expectations & follow-up</p>
-                    <p>Success, constraints, and permissions.</p>
+                    <p class="font-medium text-slate-700" id="step-title-4">Expectations & follow-up</p>
+                    <p id="step-desc-4">Success, constraints, and permissions.</p>
+                  </div>
+                </li>
+                <li class="flex items-start gap-2 hidden" id="step-pill-5-container">
+                  <span
+                    class="mt-[2px] flex h-4 w-4 items-center justify-center rounded-full border text-[10px]"
+                    id="step-pill-5"
+                  >
+                    5
+                  </span>
+                  <div>
+                    <p class="font-medium text-slate-700" id="step-title-5">Success & Follow-up</p>
+                    <p id="step-desc-5">Success metrics and follow-up expectations.</p>
                   </div>
                 </li>
               </ol>
@@ -129,7 +168,8 @@
 
           <!-- Right panel: multi-step form -->
           <main>
-            <form id="n8n-form" class="space-y-10">
+            <!-- Session Request Form -->
+            <form id="n8n-form" class="form-container space-y-10" data-form-type="session">
               <!-- Step 1: Department & participants (Sections 1–2) -->
               <section data-step="1" class="step space-y-7">
                 <div class="space-y-2">
@@ -150,14 +190,33 @@
                     <label for="department" class="block text-xs font-medium text-slate-700">
                       Department name
                     </label>
-                    <input
+                    <select
                       id="department"
                       name="department"
-                      type="text"
                       class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
-                      placeholder="e.g. Finance, Support, Product"
                       required
-                    />
+                    >
+                      <option value="">Select department</option>
+                      <option value="Quality, Performance & Training">Quality, Performance & Training</option>
+                      <option value="People & Culture">People & Culture</option>
+                      <option value="Payments & Treasury">Payments & Treasury</option>
+                      <option value="Marketing">Marketing</option>
+                      <option value="Lanka Operations">Lanka Operations</option>
+                      <option value="Finance & Audit">Finance & Audit</option>
+                      <option value="CEO's Office">CEO's Office</option>
+                      <option value="Admin, Compliance & Corporate Affairs">Admin, Compliance & Corporate Affairs</option>
+                      <option value="Trading & Risk Management">Trading & Risk Management</option>
+                      <option value="Technology">Technology</option>
+                      <option value="Product & BI">Product & BI</option>
+                      <option value="Operations">Operations</option>
+                      <option value="Community & Partner Management">Community & Partner Management</option>
+                      <option value="Client Experience">Client Experience</option>
+                      <option value="Trading & Risk Operations">Trading & Risk Operations</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Project Management">Project Management</option>
+                      <option value="Back Office">Back Office</option>
+                      <option value="Business Development">Business Development</option>
+                    </select>
                   </div>
 
                   <!-- Primary Point of Contact -->
@@ -927,6 +986,512 @@
               </div>
             </form>
 
+            <!-- Automation Request Form -->
+            <form id="automation-form" class="form-container space-y-10 hidden" data-form-type="automation">
+              <!-- Step 1: Contact & Department Information -->
+              <section data-step="1" class="step space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Contact & Department Information</h2>
+                  <p class="text-xs text-slate-500">
+                    Tell us who you are and how to reach you.
+                  </p>
+                </div>
+
+                <div class="space-y-5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <p class="text-[11px] font-medium uppercase tracking-[0.18em] text-slate-500">
+                    Contact Details
+                  </p>
+                  <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="space-y-1.5 sm:col-span-2">
+                      <label for="autoDepartment" class="block text-xs font-medium text-slate-700">
+                        Department name
+                      </label>
+                      <select
+                        id="autoDepartment"
+                        name="autoDepartment"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        required
+                      >
+                        <option value="">Select department</option>
+                        <option value="Quality, Performance & Training">Quality, Performance & Training</option>
+                        <option value="People & Culture">People & Culture</option>
+                        <option value="Payments & Treasury">Payments & Treasury</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Lanka Operations">Lanka Operations</option>
+                        <option value="Finance & Audit">Finance & Audit</option>
+                        <option value="CEO's Office">CEO's Office</option>
+                        <option value="Admin, Compliance & Corporate Affairs">Admin, Compliance & Corporate Affairs</option>
+                        <option value="Trading & Risk Management">Trading & Risk Management</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Product & BI">Product & BI</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Community & Partner Management">Community & Partner Management</option>
+                        <option value="Client Experience">Client Experience</option>
+                        <option value="Trading & Risk Operations">Trading & Risk Operations</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Project Management">Project Management</option>
+                        <option value="Back Office">Back Office</option>
+                        <option value="Business Development">Business Development</option>
+                      </select>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="autoPocName" class="block text-xs font-medium text-slate-700">
+                        Primary contact name
+                      </label>
+                      <input
+                        id="autoPocName"
+                        name="autoPocName"
+                        type="text"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="Full name"
+                        required
+                      />
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="autoPocEmail" class="block text-xs font-medium text-slate-700">
+                        Email address
+                      </label>
+                      <input
+                        id="autoPocEmail"
+                        name="autoPocEmail"
+                        type="email"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="name@company.com"
+                        required
+                      />
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="autoPocRole" class="block text-xs font-medium text-slate-700">
+                        Role / designation
+                      </label>
+                      <input
+                        id="autoPocRole"
+                        name="autoPocRole"
+                        type="text"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="e.g. Engineering Manager"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 2: Automation Details -->
+              <section data-step="2" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Automation Details</h2>
+                  <p class="text-xs text-slate-500">
+                    Describe what automation you need and what you're trying to achieve.
+                  </p>
+                </div>
+
+                <div class="space-y-5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="space-y-1.5">
+                    <label for="automationTitle" class="block text-xs font-medium text-slate-700">
+                      Title of the automation
+                    </label>
+                    <input
+                      id="automationTitle"
+                      name="automationTitle"
+                      type="text"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="e.g. Email to ClickUp Task Automation"
+                      required
+                    />
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="automationDescription" class="block text-xs font-medium text-slate-700">
+                      Description
+                    </label>
+                    <textarea
+                      id="automationDescription"
+                      name="automationDescription"
+                      rows="4"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="Describe the automation in detail. What should it do? What problem does it solve?"
+                      required
+                    ></textarea>
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="expectedOutcome" class="block text-xs font-medium text-slate-700">
+                      Outcome
+                    </label>
+                    <textarea
+                      id="expectedOutcome"
+                      name="expectedOutcome"
+                      rows="3"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="What should the automation achieve? What is the end result you're looking for?"
+                      required
+                    ></textarea>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 3: Platform Integrations -->
+              <section data-step="3" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Platform Integrations</h2>
+                  <p class="text-xs text-slate-500">
+                    Select the platforms and tools that need to be integrated in this automation.
+                  </p>
+                </div>
+
+                <fieldset class="space-y-2 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <legend class="text-xs font-medium text-slate-700">
+                    Platform integrations
+                  </legend>
+                  <p class="text-[11px] text-slate-500">
+                    Select all platforms that need to be integrated. You can add custom platforms using "Other".
+                  </p>
+                  <div class="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="clickup"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>ClickUp</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="gmail"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Gmail</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="google-sheets"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Google Sheets</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="slack"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Slack</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="microsoft-teams"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Microsoft Teams</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="airtable"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Airtable</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="notion"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Notion</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="webhooks"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Webhooks</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="trello"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Trello</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="asana"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Asana</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="jira"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Jira</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="google-drive"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Google Drive</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700">
+                      <input
+                        type="checkbox"
+                        name="autoPlatforms"
+                        value="rest-api"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>REST API</span>
+                    </label>
+                    <label class="flex items-center gap-2 text-xs text-slate-700 sm:col-span-2 lg:col-span-3">
+                      <input
+                        type="checkbox"
+                        id="autoPlatformOther"
+                        name="autoPlatforms"
+                        value="other"
+                        class="h-3.5 w-3.5 rounded border-slate-300 text-primary-600 focus:ring-primary-500"
+                      />
+                      <span>Other (specify below)</span>
+                    </label>
+                  </div>
+                </fieldset>
+
+                <!-- Custom Platform Inputs Container -->
+                <div id="customPlatformsContainer" class="hidden space-y-3 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="flex items-center justify-between">
+                    <label class="block text-xs font-medium text-slate-700">
+                      Custom platforms
+                    </label>
+                    <button
+                      type="button"
+                      id="addCustomPlatform"
+                      class="text-xs font-medium text-primary-600 hover:text-primary-700"
+                    >
+                      + Add another
+                    </button>
+                  </div>
+                  <div id="customPlatformsList" class="space-y-2">
+                    <!-- Custom platform inputs will be added here dynamically -->
+                  </div>
+                </div>
+
+                <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <label for="integrationDetails" class="block text-xs font-medium text-slate-700">
+                    Integration details (optional)
+                  </label>
+                  <textarea
+                    id="integrationDetails"
+                    name="integrationDetails"
+                    rows="3"
+                    class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    placeholder="Any specific requirements or notes about the integrations (API versions, authentication methods, etc.)"
+                  ></textarea>
+                </div>
+              </section>
+
+              <!-- Step 4: Requirements & Timeline -->
+              <section data-step="4" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Requirements & Timeline</h2>
+                  <p class="text-xs text-slate-500">
+                    Help us understand the urgency, complexity, and constraints for this automation.
+                  </p>
+                </div>
+
+                <div class="grid gap-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:grid-cols-2 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="space-y-1.5">
+                    <label for="autoUrgency" class="block text-xs font-medium text-slate-700">
+                      Urgency / Timeline
+                    </label>
+                    <select
+                      id="autoUrgency"
+                      name="autoUrgency"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select timeline</option>
+                      <option>Immediate</option>
+                      <option>Within 1 week</option>
+                      <option>Within 1 month</option>
+                      <option>Flexible</option>
+                    </select>
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="autoComplexity" class="block text-xs font-medium text-slate-700">
+                      Complexity level
+                    </label>
+                    <select
+                      id="autoComplexity"
+                      name="autoComplexity"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select complexity</option>
+                      <option>Simple</option>
+                      <option>Medium</option>
+                      <option>Complex</option>
+                      <option>Not sure</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <label for="autoAccess" class="block text-xs font-medium text-slate-700">
+                    Access / credentials availability
+                  </label>
+                  <select
+                    id="autoAccess"
+                    name="autoAccess"
+                    class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    required
+                  >
+                    <option value="">Select one</option>
+                    <option>Available</option>
+                    <option>Partially available</option>
+                    <option>Not available yet</option>
+                  </select>
+                  <p class="mt-1 text-[11px] text-slate-500">
+                    Having API credentials and access ready helps speed up the automation development process.
+                  </p>
+                </div>
+
+                <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <label for="autoConstraints" class="block text-xs font-medium text-slate-700">
+                    Constraints or requirements
+                  </label>
+                  <textarea
+                    id="autoConstraints"
+                    name="autoConstraints"
+                    rows="4"
+                    class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    placeholder="Security requirements, compliance restrictions, data sensitivity, tools that cannot be used, etc."
+                  ></textarea>
+                </div>
+
+                <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <label for="autoBudget" class="block text-xs font-medium text-slate-700">
+                    Budget considerations (optional)
+                  </label>
+                  <textarea
+                    id="autoBudget"
+                    name="autoBudget"
+                    rows="2"
+                    class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    placeholder="Any budget constraints or considerations we should be aware of"
+                  ></textarea>
+                </div>
+              </section>
+
+              <!-- Step 5: Success Criteria & Follow-up -->
+              <section data-step="5" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Success Criteria & Follow-up</h2>
+                  <p class="text-xs text-slate-500">
+                    Define what success looks like and your expectations for ongoing support.
+                  </p>
+                </div>
+
+                <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <label for="autoSuccessMetrics" class="block text-xs font-medium text-slate-700">
+                    Success metrics
+                  </label>
+                  <textarea
+                    id="autoSuccessMetrics"
+                    name="autoSuccessMetrics"
+                    rows="4"
+                    class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    placeholder="How will you measure the success of this automation? What KPIs or outcomes matter most?"
+                    required
+                  ></textarea>
+                </div>
+
+                <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <label for="autoFollowUp" class="block text-xs font-medium text-slate-700">
+                    Follow-up expectations
+                  </label>
+                  <select
+                    id="autoFollowUp"
+                    name="autoFollowUp"
+                    class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    required
+                  >
+                    <option value="">Select one</option>
+                    <option>No follow-up needed</option>
+                    <option>One follow-up session</option>
+                    <option>Ongoing support required</option>
+                  </select>
+                </div>
+
+                <div class="space-y-1.5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <label for="autoAdditionalNotes" class="block text-xs font-medium text-slate-700">
+                    Additional notes (optional)
+                  </label>
+                  <textarea
+                    id="autoAdditionalNotes"
+                    name="autoAdditionalNotes"
+                    rows="3"
+                    class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                    placeholder="Any other information that would help us understand your automation needs"
+                  ></textarea>
+                </div>
+              </section>
+
+              <!-- Navigation -->
+              <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  id="autoBackButton"
+                  class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <span aria-hidden="true" class="text-slate-400">‹</span>
+                  Previous
+                </button>
+
+                <button
+                  type="button"
+                  id="autoNextButton"
+                  class="inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                >
+                  <span id="autoNextButtonLabel">Next</span>
+                  <span aria-hidden="true" id="autoNextButtonIcon">›</span>
+                </button>
+
+                <button
+                  type="submit"
+                  id="autoSubmitButton"
+                  class="hidden inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                >
+                  Submit request
+                </button>
+              </div>
+            </form>
+
             <!-- Submission toast (for now) -->
             <div
               id="successToast"
@@ -948,100 +1513,297 @@
     </div>
 
     <script>
-      const steps = Array.from(document.querySelectorAll('.step'));
+      // Tab management
+      const tabSession = document.getElementById('tab-session');
+      const tabAutomation = document.getElementById('tab-automation');
+      const sessionForm = document.getElementById('n8n-form');
+      const automationForm = document.getElementById('automation-form');
+      const headerBadge = document.getElementById('header-badge');
+      const headerTitle = document.getElementById('header-title');
+      const headerDescription = document.getElementById('header-description');
       const progressBar = document.getElementById('progress-bar');
       const progressLabel = document.getElementById('progress-label');
       const progressSubtitle = document.getElementById('progress-subtitle');
-      const backButton = document.getElementById('backButton');
-      const nextButton = document.getElementById('nextButton');
-      const nextButtonLabel = document.getElementById('nextButtonLabel');
-      const nextButtonIcon = document.getElementById('nextButtonIcon');
-      const submitButton = document.getElementById('submitButton');
-      const form = document.getElementById('n8n-form');
       const successToast = document.getElementById('successToast');
-      const teamSuggestedSelect = document.getElementById('automationFocus');
-      const teamSuggestedContainer = document.getElementById('teamSuggestedContainer');
-      const existingWorkflowRadios = document.querySelectorAll('input[name="existingWorkflow"]');
-      const workflowUploadContainer = document.getElementById('workflowUploadContainer');
 
-      const stepPills = [
+      // Session form elements
+      const sessionSteps = Array.from(sessionForm.querySelectorAll('.step'));
+      const sessionBackButton = document.getElementById('backButton');
+      const sessionNextButton = document.getElementById('nextButton');
+      const sessionNextButtonLabel = document.getElementById('nextButtonLabel');
+      const sessionNextButtonIcon = document.getElementById('nextButtonIcon');
+      const sessionSubmitButton = document.getElementById('submitButton');
+      const sessionStepPills = [
         document.getElementById('step-pill-1'),
         document.getElementById('step-pill-2'),
         document.getElementById('step-pill-3'),
         document.getElementById('step-pill-4'),
       ];
-
-      const subtitles = [
+      const sessionSubtitles = [
         'Department & participants',
         'Session level & focus',
         'Tools & logistics',
         'Constraints & follow-up',
       ];
 
-      let currentStep = 1;
+      // Automation form elements
+      const automationSteps = Array.from(automationForm.querySelectorAll('.step'));
+      const automationBackButton = document.getElementById('autoBackButton');
+      const automationNextButton = document.getElementById('autoNextButton');
+      const automationNextButtonLabel = document.getElementById('autoNextButtonLabel');
+      const automationNextButtonIcon = document.getElementById('autoNextButtonIcon');
+      const automationSubmitButton = document.getElementById('autoSubmitButton');
+      const automationStepPills = [
+        document.getElementById('step-pill-1'),
+        document.getElementById('step-pill-2'),
+        document.getElementById('step-pill-3'),
+        document.getElementById('step-pill-4'),
+      ];
+      const automationSubtitles = [
+        'Contact & Department',
+        'Automation Details',
+        'Platform Integrations',
+        'Requirements & Timeline',
+        'Success & Follow-up',
+      ];
+
+      // Custom platform functionality
+      const autoPlatformOther = document.getElementById('autoPlatformOther');
+      const customPlatformsContainer = document.getElementById('customPlatformsContainer');
+      const customPlatformsList = document.getElementById('customPlatformsList');
+      const addCustomPlatformBtn = document.getElementById('addCustomPlatform');
+      let customPlatformCounter = 0;
+
+      // State
+      let activeTab = 'session';
+      let sessionCurrentStep = 1;
+      let automationCurrentStep = 1;
       let isSubmitting = false;
 
-      // Google Apps Script Web App endpoint that appends submissions to a Sheet
-      const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzpmjfBhvDmKlrz_DJ1JrSOvmysBUAtol379BpLR9Yh7xgoE1hYa5Oi3rW0cVw4rGVD/exec';
+      // Google Apps Script Web App endpoint (used for both session and automation forms)
+      // Replace this URL with your new deployment URL after updating the Google Apps Script
+      const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbx4sFl14EJ3iR-E9bysJR5P1IgAbOduTXmZE014LNSCIDZb3zqf4MkgducigGMZ1PaX/exec';
 
-      function updateStep(newStep) {
-        currentStep = newStep;
+      // Tab switching
+      function switchTab(tab) {
+        activeTab = tab;
+        
+        // Update tab buttons
+        if (tab === 'session') {
+          tabSession.classList.add('active', 'border-primary-600', 'text-primary-600');
+          tabSession.classList.remove('border-transparent', 'text-slate-600');
+          tabAutomation.classList.remove('active', 'border-primary-600', 'text-primary-600');
+          tabAutomation.classList.add('border-transparent', 'text-slate-600');
+          sessionForm.classList.remove('hidden');
+          automationForm.classList.add('hidden');
+          
+          // Update header
+          headerBadge.textContent = 'n8n Session Request';
+          headerTitle.textContent = 'n8n Session Request Form';
+          headerDescription.innerHTML = 'Use this form to request an n8n learning or working session for your department. Sessions are run by <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span>. We&apos;ll use your answers to match the session depth, format, and scope to your team.';
+          
+          // Update progress for session form
+          updateSessionStep(sessionCurrentStep);
+        } else {
+          tabAutomation.classList.add('active', 'border-primary-600', 'text-primary-600');
+          tabAutomation.classList.remove('border-transparent', 'text-slate-600');
+          tabSession.classList.remove('active', 'border-primary-600', 'text-primary-600');
+          tabSession.classList.add('border-transparent', 'text-slate-600');
+          automationForm.classList.remove('hidden');
+          sessionForm.classList.add('hidden');
+          
+          // Update header
+          headerBadge.textContent = 'n8n Automation Request';
+          headerTitle.textContent = 'n8n Automation Request Form';
+          headerDescription.innerHTML = 'Use this form to request a custom n8n automation for your team. <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span> will review your request and build the automation that meets your needs.';
+          
+          // Update progress for automation form
+          updateAutomationStep(automationCurrentStep);
+        }
+      }
 
-        steps.forEach((section) => {
-          section.classList.toggle('hidden', Number(section.dataset.step) !== currentStep);
+      // Session form step management
+      function updateSessionStep(newStep) {
+        sessionCurrentStep = newStep;
+
+        sessionSteps.forEach((section) => {
+          section.classList.toggle('hidden', Number(section.dataset.step) !== sessionCurrentStep);
         });
 
-        progressLabel.textContent = `Step ${currentStep} of ${steps.length}`;
-        progressSubtitle.textContent = subtitles[currentStep - 1];
+        progressLabel.textContent = `Step ${sessionCurrentStep} of ${sessionSteps.length}`;
+        progressSubtitle.textContent = sessionSubtitles[sessionCurrentStep - 1];
 
-        const percentage = (currentStep / steps.length) * 100;
+        const percentage = (sessionCurrentStep / sessionSteps.length) * 100;
         progressBar.style.width = `${percentage}%`;
 
-        stepPills.forEach((pill, index) => {
+        // Hide 5th step pill for session form
+        const step5Container = document.getElementById('step-pill-5-container');
+        if (step5Container) {
+          step5Container.classList.add('hidden');
+        }
+
+        // Update step descriptions for session
+        const sessionStepTitles = [
+          'Department & audience',
+          'Session focus',
+          'Tools & logistics',
+          'Expectations & follow-up'
+        ];
+        const sessionStepDescs = [
+          'Who is requesting and who will join.',
+          'Level, type, and core automation idea.',
+          'Integrations, access, and timing.',
+          'Success, constraints, and permissions.'
+        ];
+
+        for (let i = 1; i <= 4; i++) {
+          const titleEl = document.getElementById(`step-title-${i}`);
+          const descEl = document.getElementById(`step-desc-${i}`);
+          if (titleEl && descEl) {
+            titleEl.textContent = sessionStepTitles[i - 1];
+            descEl.textContent = sessionStepDescs[i - 1];
+          }
+        }
+
+        sessionStepPills.forEach((pill, index) => {
           const stepIndex = index + 1;
           pill.classList.remove('bg-primary-600', 'text-white', 'border-primary-600');
           pill.classList.remove('bg-slate-900', 'text-slate-50', 'border-slate-900');
           pill.classList.remove('bg-slate-100', 'text-slate-500', 'border-slate-200');
 
-          if (stepIndex < currentStep) {
+          if (stepIndex < sessionCurrentStep) {
             pill.classList.add('bg-primary-600', 'text-white', 'border-primary-600');
-          } else if (stepIndex === currentStep) {
+          } else if (stepIndex === sessionCurrentStep) {
             pill.classList.add('bg-slate-900', 'text-slate-50', 'border-slate-900');
           } else {
             pill.classList.add('bg-slate-100', 'text-slate-500', 'border-slate-200');
           }
         });
 
-        backButton.disabled = currentStep === 1 || isSubmitting;
+        sessionBackButton.disabled = sessionCurrentStep === 1 || isSubmitting;
 
-        if (currentStep === steps.length) {
-          nextButton.classList.add('hidden');
-          submitButton.classList.remove('hidden');
+        if (sessionCurrentStep === sessionSteps.length) {
+          sessionNextButton.classList.add('hidden');
+          sessionSubmitButton.classList.remove('hidden');
         } else {
-          nextButton.classList.remove('hidden');
-          submitButton.classList.add('hidden');
-          nextButtonLabel.textContent = 'Next';
-          nextButtonIcon.textContent = '›';
+          sessionNextButton.classList.remove('hidden');
+          sessionSubmitButton.classList.add('hidden');
+          sessionNextButtonLabel.textContent = 'Next';
+          sessionNextButtonIcon.textContent = '›';
+        }
+      }
+
+      // Automation form step management
+      function updateAutomationStep(newStep) {
+        automationCurrentStep = newStep;
+
+        automationSteps.forEach((section) => {
+          section.classList.toggle('hidden', Number(section.dataset.step) !== automationCurrentStep);
+        });
+
+        progressLabel.textContent = `Step ${automationCurrentStep} of ${automationSteps.length}`;
+        progressSubtitle.textContent = automationSubtitles[automationCurrentStep - 1];
+
+        const percentage = (automationCurrentStep / automationSteps.length) * 100;
+        progressBar.style.width = `${percentage}%`;
+
+        // Show 5th step pill for automation
+        const step5Container = document.getElementById('step-pill-5-container');
+        if (step5Container) {
+          step5Container.classList.remove('hidden');
+        }
+
+        // Update step descriptions for automation
+        const automationStepTitles = [
+          'Contact & Department',
+          'Automation Details',
+          'Platform Integrations',
+          'Requirements & Timeline',
+          'Success & Follow-up'
+        ];
+        const automationStepDescs = [
+          'Who is requesting and contact information.',
+          'What automation is needed and expected outcomes.',
+          'Platforms and tools to integrate.',
+          'Urgency, complexity, and constraints.',
+          'Success metrics and follow-up expectations.'
+        ];
+
+        for (let i = 1; i <= 5; i++) {
+          const titleEl = document.getElementById(`step-title-${i}`);
+          const descEl = document.getElementById(`step-desc-${i}`);
+          if (titleEl && descEl && i <= automationStepTitles.length) {
+            titleEl.textContent = automationStepTitles[i - 1];
+            descEl.textContent = automationStepDescs[i - 1];
+          }
+        }
+
+        // Update step pills (we need to show 5 pills for automation)
+        const allPills = [...sessionStepPills, document.getElementById('step-pill-5')];
+        for (let i = 0; i < 5; i++) {
+          const stepIndex = i + 1;
+          const pill = allPills[i];
+          if (pill) {
+            pill.classList.remove('bg-primary-600', 'text-white', 'border-primary-600');
+            pill.classList.remove('bg-slate-900', 'text-slate-50', 'border-slate-900');
+            pill.classList.remove('bg-slate-100', 'text-slate-500', 'border-slate-200');
+
+            if (stepIndex < automationCurrentStep) {
+              pill.classList.add('bg-primary-600', 'text-white', 'border-primary-600');
+            } else if (stepIndex === automationCurrentStep) {
+              pill.classList.add('bg-slate-900', 'text-slate-50', 'border-slate-900');
+            } else {
+              pill.classList.add('bg-slate-100', 'text-slate-500', 'border-slate-200');
+            }
+          }
+        }
+
+        automationBackButton.disabled = automationCurrentStep === 1 || isSubmitting;
+
+        if (automationCurrentStep === automationSteps.length) {
+          automationNextButton.classList.add('hidden');
+          automationSubmitButton.classList.remove('hidden');
+        } else {
+          automationNextButton.classList.remove('hidden');
+          automationSubmitButton.classList.add('hidden');
+          automationNextButtonLabel.textContent = 'Next';
+          automationNextButtonIcon.textContent = '›';
         }
       }
 
       function setSubmitting(submitting) {
         isSubmitting = submitting;
 
-        backButton.disabled = currentStep === 1 || submitting;
-        nextButton.disabled = submitting;
-        submitButton.disabled = submitting;
+        if (activeTab === 'session') {
+          sessionBackButton.disabled = sessionCurrentStep === 1 || submitting;
+          sessionNextButton.disabled = submitting;
+          sessionSubmitButton.disabled = submitting;
 
-        if (submitting) {
-          submitButton.classList.add('opacity-60', 'cursor-wait');
-          submitButton.textContent = 'Submitting…';
+          if (submitting) {
+            sessionSubmitButton.classList.add('opacity-60', 'cursor-wait');
+            sessionSubmitButton.textContent = 'Submitting…';
+          } else {
+            sessionSubmitButton.classList.remove('opacity-60', 'cursor-wait');
+            sessionSubmitButton.textContent = 'Submit request';
+          }
         } else {
-          submitButton.classList.remove('opacity-60', 'cursor-wait');
-          submitButton.textContent = 'Submit request';
+          automationBackButton.disabled = automationCurrentStep === 1 || submitting;
+          automationNextButton.disabled = submitting;
+          automationSubmitButton.disabled = submitting;
+
+          if (submitting) {
+            automationSubmitButton.classList.add('opacity-60', 'cursor-wait');
+            automationSubmitButton.textContent = 'Submitting…';
+          } else {
+            automationSubmitButton.classList.remove('opacity-60', 'cursor-wait');
+            automationSubmitButton.textContent = 'Submit request';
+          }
         }
       }
 
       function validateCurrentStep() {
+        const steps = activeTab === 'session' ? sessionSteps : automationSteps;
+        const currentStep = activeTab === 'session' ? sessionCurrentStep : automationCurrentStep;
         const section = steps[currentStep - 1];
         const requiredFields = Array.from(section.querySelectorAll('[required]'));
         for (const field of requiredFields) {
@@ -1053,26 +1815,82 @@
         return true;
       }
 
-      backButton.addEventListener('click', () => {
-        if (currentStep > 1) {
-          updateStep(currentStep - 1);
+      // Custom platform functionality
+      function addCustomPlatformInput() {
+        customPlatformCounter++;
+        const inputGroup = document.createElement('div');
+        inputGroup.className = 'flex items-center gap-2';
+        inputGroup.innerHTML = `
+          <input
+            type="text"
+            name="customPlatforms"
+            class="flex-1 rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+            placeholder="Enter platform name"
+          />
+          <button
+            type="button"
+            class="remove-custom-platform text-xs font-medium text-red-600 hover:text-red-700"
+            data-index="${customPlatformCounter}"
+          >
+            Remove
+          </button>
+        `;
+        customPlatformsList.appendChild(inputGroup);
+
+        // Add remove functionality
+        inputGroup.querySelector('.remove-custom-platform').addEventListener('click', () => {
+          inputGroup.remove();
+          if (customPlatformsList.children.length === 0) {
+            customPlatformsContainer.classList.add('hidden');
+            autoPlatformOther.checked = false;
+          }
+        });
+      }
+
+      // Tab event listeners
+      tabSession.addEventListener('click', () => switchTab('session'));
+      tabAutomation.addEventListener('click', () => switchTab('automation'));
+
+      // Session form navigation
+      sessionBackButton.addEventListener('click', () => {
+        if (sessionCurrentStep > 1) {
+          updateSessionStep(sessionCurrentStep - 1);
         }
       });
 
-      nextButton.addEventListener('click', () => {
+      sessionNextButton.addEventListener('click', () => {
         if (!validateCurrentStep()) return;
-        if (currentStep < steps.length) {
-          updateStep(currentStep + 1);
+        if (sessionCurrentStep < sessionSteps.length) {
+          updateSessionStep(sessionCurrentStep + 1);
         }
       });
 
-      form.addEventListener('submit', async (event) => {
+      // Automation form navigation
+      automationBackButton.addEventListener('click', () => {
+        if (automationCurrentStep > 1) {
+          updateAutomationStep(automationCurrentStep - 1);
+        }
+      });
+
+      automationNextButton.addEventListener('click', () => {
+        if (!validateCurrentStep()) return;
+        if (automationCurrentStep < automationSteps.length) {
+          updateAutomationStep(automationCurrentStep + 1);
+        }
+      });
+
+      // Form submissions
+      sessionForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         if (isSubmitting) return;
         if (!validateCurrentStep()) return;
 
-        const formData = new FormData(form);
+        const formData = new FormData(sessionForm);
         const payload = {};
+        
+        // Add form type to route to correct sheet
+        payload.formType = 'session';
+        
         formData.forEach((value, key) => {
           if (payload[key] === undefined) {
             payload[key] = value;
@@ -1089,8 +1907,6 @@
             throw new Error('Submit endpoint is not configured.');
           }
 
-          // Use no-cors so the browser doesn't block the request to Apps Script.
-          // We treat this as "fire-and-forget" and don't rely on the response.
           await fetch(SUBMIT_ENDPOINT, {
             method: 'POST',
             mode: 'no-cors',
@@ -1105,8 +1921,8 @@
             successToast.classList.add('opacity-0');
           }, 3200);
 
-          form.reset();
-          updateStep(1);
+          sessionForm.reset();
+          updateSessionStep(1);
         } catch (error) {
           console.error('Error submitting form', error);
           alert('Something went wrong while submitting. Please check the browser console for details or contact the team.');
@@ -1115,30 +1931,117 @@
         }
       });
 
-      // Conditional logic for team-suggested automation
-      teamSuggestedSelect.addEventListener('change', () => {
-        if (teamSuggestedSelect.value === 'team-suggested') {
-          teamSuggestedContainer.classList.remove('hidden');
-          teamSuggestedContainer.querySelector('textarea').setAttribute('required', 'required');
-        } else {
-          teamSuggestedContainer.classList.add('hidden');
-          teamSuggestedContainer.querySelector('textarea').removeAttribute('required');
+      automationForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (isSubmitting) return;
+        if (!validateCurrentStep()) return;
+
+        const formData = new FormData(automationForm);
+        const payload = {};
+        
+        // Add form type to route to correct sheet
+        payload.formType = 'automation';
+        
+        // Collect custom platforms
+        const customPlatforms = Array.from(formData.getAll('customPlatforms')).filter(p => p.trim() !== '');
+        if (customPlatforms.length > 0) {
+          payload.customPlatforms = customPlatforms;
+        }
+
+        formData.forEach((value, key) => {
+          if (key === 'customPlatforms') return; // Already handled
+          if (payload[key] === undefined) {
+            payload[key] = value;
+          } else if (Array.isArray(payload[key])) {
+            payload[key].push(value);
+          } else {
+            payload[key] = [payload[key], value];
+          }
+        });
+
+        try {
+          setSubmitting(true);
+          if (!SUBMIT_ENDPOINT || !SUBMIT_ENDPOINT.startsWith('http')) {
+            throw new Error('Submit endpoint is not configured.');
+          }
+
+          await fetch(SUBMIT_ENDPOINT, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(payload),
+          });
+
+          successToast.classList.remove('opacity-0');
+          successToast.classList.add('opacity-100');
+
+          setTimeout(() => {
+            successToast.classList.remove('opacity-100');
+            successToast.classList.add('opacity-0');
+          }, 3200);
+
+          automationForm.reset();
+          customPlatformsList.innerHTML = '';
+          customPlatformsContainer.classList.add('hidden');
+          autoPlatformOther.checked = false;
+          customPlatformCounter = 0;
+          updateAutomationStep(1);
+        } catch (error) {
+          console.error('Error submitting form', error);
+          alert('Something went wrong while submitting. Please check the browser console for details or contact the team.');
+        } finally {
+          setSubmitting(false);
         }
       });
 
-      // Conditional logic for existing workflow upload
-      existingWorkflowRadios.forEach((radio) => {
-        radio.addEventListener('change', () => {
-          if (radio.value === 'yes' && radio.checked) {
-            workflowUploadContainer.classList.remove('hidden');
-          } else if (radio.value === 'no' && radio.checked) {
-            workflowUploadContainer.classList.add('hidden');
+      // Custom platform checkbox handler
+      autoPlatformOther.addEventListener('change', () => {
+        if (autoPlatformOther.checked) {
+          customPlatformsContainer.classList.remove('hidden');
+          if (customPlatformsList.children.length === 0) {
+            addCustomPlatformInput();
           }
-        });
+        } else {
+          customPlatformsContainer.classList.add('hidden');
+          customPlatformsList.innerHTML = '';
+          customPlatformCounter = 0;
+        }
       });
 
-      // Initialize state
-      updateStep(1);
+      // Add custom platform button
+      addCustomPlatformBtn.addEventListener('click', addCustomPlatformInput);
+
+      // Conditional logic for session form
+      const teamSuggestedSelect = document.getElementById('automationFocus');
+      const teamSuggestedContainer = document.getElementById('teamSuggestedContainer');
+      const existingWorkflowRadios = document.querySelectorAll('input[name="existingWorkflow"]');
+      const workflowUploadContainer = document.getElementById('workflowUploadContainer');
+
+      if (teamSuggestedSelect) {
+        teamSuggestedSelect.addEventListener('change', () => {
+          if (teamSuggestedSelect.value === 'team-suggested') {
+            teamSuggestedContainer.classList.remove('hidden');
+            teamSuggestedContainer.querySelector('textarea').setAttribute('required', 'required');
+          } else {
+            teamSuggestedContainer.classList.add('hidden');
+            teamSuggestedContainer.querySelector('textarea').removeAttribute('required');
+          }
+        });
+      }
+
+      if (existingWorkflowRadios.length > 0) {
+        existingWorkflowRadios.forEach((radio) => {
+          radio.addEventListener('change', () => {
+            if (radio.value === 'yes' && radio.checked) {
+              workflowUploadContainer.classList.remove('hidden');
+            } else if (radio.value === 'no' && radio.checked) {
+              workflowUploadContainer.classList.add('hidden');
+            }
+          });
+        });
+      }
+
+      // Initialize
+      switchTab('session');
     </script>
   </body>
 </html>
