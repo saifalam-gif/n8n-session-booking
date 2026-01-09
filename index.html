@@ -46,32 +46,123 @@
         border-bottom-color: rgb(5, 150, 105);
         color: rgb(5, 150, 105);
       }
+      .cqms-tab-button.active {
+        border-bottom-color: rgb(5, 150, 105);
+        color: rgb(5, 150, 105);
+      }
     </style>
   </head>
   <body class="min-h-screen bg-slate-50 font-sans text-slate-900">
     <div class="flex min-h-screen items-center justify-center px-4 py-10">
       <div class="w-full max-w-5xl rounded-3xl bg-white shadow-[0_18px_45px_rgba(15,23,42,0.05)] ring-1 ring-slate-100">
-        <!-- Tab Navigation -->
-        <div class="border-b border-slate-100 px-6 pt-6 sm:px-10 sm:pt-10">
-          <div class="flex gap-2">
+        <!-- Landing Page - Options Selection -->
+        <div id="landing-page" class="p-6 sm:p-10">
+          <header class="mb-10 text-center">
+            <p class="text-xs font-medium uppercase tracking-[0.2em] text-primary-600 mb-3">
+              Team D.A.R Services
+            </p>
+            <h1 class="text-3xl font-semibold text-slate-900 mb-3">
+              How can we help you?
+            </h1>
+            <p class="text-sm leading-relaxed text-slate-600 max-w-2xl mx-auto">
+              Select a service below to get started. Our <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span> is here to assist you.
+            </p>
+          </header>
+
+          <!-- Options Grid -->
+          <div class="grid gap-6 sm:grid-cols-2">
+            <!-- Session Booking -->
             <button
               type="button"
-              id="tab-session"
-              class="tab-button active rounded-t-lg border-b-2 border-transparent px-4 py-2 text-xs font-medium text-slate-600 transition-colors hover:text-slate-900"
-              data-tab="session"
+              id="option-session"
+              class="group relative flex flex-col items-start rounded-2xl border-2 border-slate-200 bg-white p-6 text-left transition-all hover:border-primary-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              data-option="session"
             >
-              Session Request
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-100">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 class="mb-2 text-lg font-semibold text-slate-900">Session Booking</h3>
+              <p class="text-sm text-slate-600">
+                Request an n8n learning or working session for your department. We'll customize the session to match your team's needs.
+              </p>
             </button>
+
+            <!-- Automation Request -->
             <button
               type="button"
-              id="tab-automation"
-              class="tab-button rounded-t-lg border-b-2 border-transparent px-4 py-2 text-xs font-medium text-slate-600 transition-colors hover:text-slate-900"
-              data-tab="automation"
+              id="option-automation"
+              class="group relative flex flex-col items-start rounded-2xl border-2 border-slate-200 bg-white p-6 text-left transition-all hover:border-primary-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              data-option="automation"
             >
-              Automation Request
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-100">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <h3 class="mb-2 text-lg font-semibold text-slate-900">Automation Request</h3>
+              <p class="text-sm text-slate-600">
+                Request a custom n8n automation for your team. We'll review your needs and build the automation that works for you.
+              </p>
+            </button>
+
+            <!-- Bug-Feature Request for CQMS -->
+            <button
+              type="button"
+              id="option-cqms"
+              class="group relative flex flex-col items-start rounded-2xl border-2 border-slate-200 bg-white p-6 text-left transition-all hover:border-primary-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              data-option="cqms"
+            >
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-100">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                </svg>
+              </div>
+              <h3 class="mb-2 text-lg font-semibold text-slate-900">Bug/Feature Request for CQMS</h3>
+              <p class="text-sm text-slate-600">
+                Report a bug or request a new feature for the CQMS system. Help us improve the platform.
+              </p>
+            </button>
+
+            <!-- Project Request (Coming Soon) -->
+            <button
+              type="button"
+              id="option-project"
+              class="group relative flex flex-col items-start rounded-2xl border-2 border-slate-200 bg-slate-50 p-6 text-left transition-all cursor-not-allowed opacity-75"
+              disabled
+            >
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-200 text-slate-400">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                </svg>
+              </div>
+              <div class="mb-2 flex items-center gap-2">
+                <h3 class="text-lg font-semibold text-slate-600">Project Request</h3>
+                <span class="rounded-full bg-slate-300 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-600">Coming Soon</span>
+              </div>
+              <p class="text-sm text-slate-500">
+                Request a new project or initiative. This feature will be available soon.
+              </p>
             </button>
           </div>
         </div>
+
+        <!-- Forms Container (Hidden by default) -->
+        <div id="forms-container" class="hidden">
+          <!-- Back Button -->
+          <div class="border-b border-slate-100 px-6 pt-6 sm:px-10 sm:pt-10">
+            <button
+              type="button"
+              id="back-to-landing"
+              class="mb-4 flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-900"
+            >
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to options
+            </button>
+          </div>
         <div class="grid gap-10 p-6 sm:p-10 lg:grid-cols-[1.05fr,1.45fr]">
           <!-- Left panel: intro & progress -->
           <aside class="space-y-10 border-b border-slate-100 pb-8 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-10">
@@ -169,7 +260,7 @@
           <!-- Right panel: multi-step form -->
           <main>
             <!-- Session Request Form -->
-            <form id="n8n-form" class="form-container space-y-10" data-form-type="session">
+            <form id="n8n-form" class="form-container space-y-10 hidden" data-form-type="session">
               <!-- Step 1: Department & participants (Sections 1–2) -->
               <section data-step="1" class="step space-y-7">
                 <div class="space-y-2">
@@ -1492,6 +1583,418 @@
               </div>
             </form>
 
+            <!-- CQMS Bug/Feature Request Form -->
+            <form id="cqms-form" class="form-container space-y-10 hidden" data-form-type="cqms">
+              <!-- Step 1: Contact Information -->
+              <section data-step="1" class="step space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Contact Information</h2>
+                  <p class="text-xs text-slate-500">
+                    Let us know who you are so we can follow up with you.
+                  </p>
+                </div>
+
+                <div class="grid gap-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:grid-cols-2 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="space-y-1.5 sm:col-span-2">
+                    <label for="cqmsDepartment" class="block text-xs font-medium text-slate-700">
+                      Department name
+                    </label>
+                    <select
+                      id="cqmsDepartment"
+                      name="cqmsDepartment"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select department</option>
+                      <option value="Quality, Performance & Training">Quality, Performance & Training</option>
+                      <option value="People & Culture">People & Culture</option>
+                      <option value="Payments & Treasury">Payments & Treasury</option>
+                      <option value="Marketing">Marketing</option>
+                      <option value="Lanka Operations">Lanka Operations</option>
+                      <option value="Finance & Audit">Finance & Audit</option>
+                      <option value="CEO's Office">CEO's Office</option>
+                      <option value="Admin, Compliance & Corporate Affairs">Admin, Compliance & Corporate Affairs</option>
+                      <option value="Trading & Risk Management">Trading & Risk Management</option>
+                      <option value="Technology">Technology</option>
+                      <option value="Product & BI">Product & BI</option>
+                      <option value="Operations">Operations</option>
+                      <option value="Community & Partner Management">Community & Partner Management</option>
+                      <option value="Client Experience">Client Experience</option>
+                      <option value="Trading & Risk Operations">Trading & Risk Operations</option>
+                      <option value="Sales">Sales</option>
+                      <option value="Project Management">Project Management</option>
+                      <option value="Back Office">Back Office</option>
+                      <option value="Business Development">Business Development</option>
+                    </select>
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="cqmsName" class="block text-xs font-medium text-slate-700">
+                      Your name
+                    </label>
+                    <input
+                      id="cqmsName"
+                      name="cqmsName"
+                      type="text"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="Full name"
+                      required
+                    />
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label for="cqmsEmail" class="block text-xs font-medium text-slate-700">
+                      Email address
+                    </label>
+                    <input
+                      id="cqmsEmail"
+                      name="cqmsEmail"
+                      type="email"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="your.email@company.com"
+                      required
+                    />
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 2: Request Type Selection with Tabs -->
+              <section data-step="2" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Request Type</h2>
+                  <p class="text-xs text-slate-500">
+                    Select whether you're reporting a bug or requesting a feature.
+                  </p>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="border-b border-slate-100">
+                  <div class="flex gap-2">
+                    <button
+                      type="button"
+                      id="cqms-tab-bug"
+                      class="cqms-tab-button active rounded-t-lg border-b-2 border-primary-600 px-4 py-2 text-xs font-medium text-primary-600 transition-colors"
+                      data-tab="bug"
+                    >
+                      Bug Report
+                    </button>
+                    <button
+                      type="button"
+                      id="cqms-tab-feature"
+                      class="cqms-tab-button rounded-t-lg border-b-2 border-transparent px-4 py-2 text-xs font-medium text-slate-600 transition-colors hover:text-slate-900"
+                      data-tab="feature"
+                    >
+                      Feature Request
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Hidden input to store selected type -->
+                <input type="hidden" id="cqmsRequestType" name="cqmsRequestType" value="bug" required />
+
+                <!-- Bug Report Tab Content -->
+                <div id="cqms-bug-content" class="cqms-tab-content space-y-4">
+                  <div class="space-y-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                    <div class="space-y-1.5">
+                      <label for="cqmsBugTitle" class="block text-xs font-medium text-slate-700">
+                        Bug Title <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="cqmsBugTitle"
+                        name="cqmsBugTitle"
+                        type="text"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="Brief, descriptive title of the bug"
+                        required
+                      />
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsBugDescription" class="block text-xs font-medium text-slate-700">
+                        Description <span class="text-red-500">*</span>
+                      </label>
+                      <textarea
+                        id="cqmsBugDescription"
+                        name="cqmsBugDescription"
+                        rows="4"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="Describe what the bug is and what you were trying to do..."
+                        required
+                      ></textarea>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsStepsToReproduce" class="block text-xs font-medium text-slate-700">
+                        Steps to Reproduce
+                      </label>
+                      <textarea
+                        id="cqmsStepsToReproduce"
+                        name="cqmsStepsToReproduce"
+                        rows="5"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="1. Go to...&#10;2. Click on...&#10;3. See error..."
+                      ></textarea>
+                      <p class="text-[11px] text-slate-500">
+                        Provide clear, numbered steps that someone else can follow to reproduce the bug.
+                      </p>
+                    </div>
+
+                    <div class="grid gap-4 sm:grid-cols-2">
+                      <div class="space-y-1.5">
+                        <label for="cqmsExpectedBehavior" class="block text-xs font-medium text-slate-700">
+                          Expected Behavior <span class="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          id="cqmsExpectedBehavior"
+                          name="cqmsExpectedBehavior"
+                          rows="3"
+                          class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                          placeholder="What should have happened?"
+                          required
+                        ></textarea>
+                      </div>
+
+                      <div class="space-y-1.5">
+                        <label for="cqmsActualBehavior" class="block text-xs font-medium text-slate-700">
+                          Actual Behavior <span class="text-red-500">*</span>
+                        </label>
+                        <textarea
+                          id="cqmsActualBehavior"
+                          name="cqmsActualBehavior"
+                          rows="3"
+                          class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                          placeholder="What actually happened?"
+                          required
+                        ></textarea>
+                      </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsBugFrequency" class="block text-xs font-medium text-slate-700">
+                        Frequency <span class="text-red-500">*</span>
+                      </label>
+                      <select
+                        id="cqmsBugFrequency"
+                        name="cqmsBugFrequency"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        required
+                      >
+                        <option value="">Select frequency</option>
+                        <option value="always">Always - Happens every time</option>
+                        <option value="often">Often - Happens frequently</option>
+                        <option value="sometimes">Sometimes - Happens occasionally</option>
+                        <option value="once">Once - Happened only once</option>
+                      </select>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsBugPriority" class="block text-xs font-medium text-slate-700">
+                        Priority/Severity <span class="text-red-500">*</span>
+                      </label>
+                      <select
+                        id="cqmsBugPriority"
+                        name="cqmsBugPriority"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        required
+                      >
+                        <option value="">Select priority</option>
+                        <option value="critical">Critical - System down or data loss</option>
+                        <option value="high">High - Major functionality broken</option>
+                        <option value="medium">Medium - Minor functionality broken</option>
+                        <option value="low">Low - Cosmetic issue or minor inconvenience</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Feature Request Tab Content -->
+                <div id="cqms-feature-content" class="cqms-tab-content hidden space-y-4">
+                  <div class="space-y-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                    <div class="space-y-1.5">
+                      <label for="cqmsFeatureTitle" class="block text-xs font-medium text-slate-700">
+                        Feature Title <span class="text-red-500">*</span>
+                      </label>
+                      <input
+                        id="cqmsFeatureTitle"
+                        name="cqmsFeatureTitle"
+                        type="text"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="Brief, descriptive title of the feature"
+                        required
+                      />
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsFeatureDescription" class="block text-xs font-medium text-slate-700">
+                        Description <span class="text-red-500">*</span>
+                      </label>
+                      <textarea
+                        id="cqmsFeatureDescription"
+                        name="cqmsFeatureDescription"
+                        rows="4"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="Describe the feature you'd like to see..."
+                        required
+                      ></textarea>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsUseCase" class="block text-xs font-medium text-slate-700">
+                        Use Case <span class="text-red-500">*</span>
+                      </label>
+                      <textarea
+                        id="cqmsUseCase"
+                        name="cqmsUseCase"
+                        rows="4"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="Describe the specific scenario or problem this feature would solve..."
+                        required
+                      ></textarea>
+                      <p class="text-[11px] text-slate-500">
+                        Explain when and why you would use this feature.
+                      </p>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsFeatureBenefits" class="block text-xs font-medium text-slate-700">
+                        Benefits & Impact <span class="text-red-500">*</span>
+                      </label>
+                      <textarea
+                        id="cqmsFeatureBenefits"
+                        name="cqmsFeatureBenefits"
+                        rows="3"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="How would this feature improve your workflow or benefit users?"
+                        required
+                      ></textarea>
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsFeaturePriority" class="block text-xs font-medium text-slate-700">
+                        Priority <span class="text-red-500">*</span>
+                      </label>
+                      <select
+                        id="cqmsFeaturePriority"
+                        name="cqmsFeaturePriority"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        required
+                      >
+                        <option value="">Select priority</option>
+                        <option value="critical">Critical - Blocking important work</option>
+                        <option value="high">High - Would significantly improve workflow</option>
+                        <option value="medium">Medium - Would be helpful</option>
+                        <option value="low">Low - Nice to have</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Step 3: Additional Information (Screenshots, Environment, etc.) -->
+              <section data-step="3" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Additional Information</h2>
+                  <p class="text-xs text-slate-500">
+                    Provide screenshots, videos, environment details, and any other context that might help.
+                  </p>
+                </div>
+
+                <div class="space-y-4 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <!-- Screenshot/Video Link -->
+                  <div class="space-y-3">
+                    <label class="block text-xs font-medium text-slate-700">
+                      Screenshot or Video Link
+                    </label>
+                    <input
+                      id="cqmsScreenshot"
+                      name="cqmsScreenshot"
+                      type="url"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="Screenshot/Video URL (e.g., Google Drive, OneDrive, Imgur link)"
+                    />
+                    <p class="text-[11px] text-slate-500">
+                      Upload screenshots/videos to Google Drive, OneDrive, or similar service and paste the shareable link here. For bugs, include screenshots showing the error or unexpected behavior.
+                    </p>
+                  </div>
+
+                  <!-- Environment Information (mainly for bugs) -->
+                  <div id="cqms-bug-env-info" class="space-y-4">
+                    <div class="space-y-1.5">
+                      <label for="cqmsAffectedArea" class="block text-xs font-medium text-slate-700">
+                        Affected Area/Module
+                      </label>
+                      <input
+                        id="cqmsAffectedArea"
+                        name="cqmsAffectedArea"
+                        type="text"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="e.g., Reports, User Management, Data Entry, Dashboard"
+                      />
+                    </div>
+
+                    <div class="space-y-1.5">
+                      <label for="cqmsErrorMessages" class="block text-xs font-medium text-slate-700">
+                        Error Messages / Console Logs
+                      </label>
+                      <textarea
+                        id="cqmsErrorMessages"
+                        name="cqmsErrorMessages"
+                        rows="4"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100 font-mono text-xs"
+                        placeholder="Paste any error messages, console errors, or stack traces here..."
+                      ></textarea>
+                      <p class="text-[11px] text-slate-500">
+                        Open browser DevTools (F12) → Console tab, copy any red error messages and paste here.
+                      </p>
+                    </div>
+                  </div>
+
+                  <!-- Additional Notes (for both bug and feature) -->
+                  <div class="space-y-1.5">
+                    <label for="cqmsAdditionalInfo" class="block text-xs font-medium text-slate-700">
+                      Additional Notes
+                    </label>
+                    <textarea
+                      id="cqmsAdditionalInfo"
+                      name="cqmsAdditionalInfo"
+                      rows="4"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="Any other information that might be helpful (workarounds, related issues, etc.)"
+                    ></textarea>
+                  </div>
+                </div>
+              </section>
+
+              <!-- Navigation -->
+              <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  id="cqmsBackButton"
+                  class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <span aria-hidden="true">‹</span>
+                  Previous
+                </button>
+
+                <button
+                  type="button"
+                  id="cqmsNextButton"
+                  class="inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                >
+                  <span id="cqmsNextButtonLabel">Next</span>
+                  <span aria-hidden="true" id="cqmsNextButtonIcon">›</span>
+                </button>
+
+                <button
+                  type="submit"
+                  id="cqmsSubmitButton"
+                  class="hidden inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                >
+                  Submit request
+                </button>
+              </div>
+            </form>
+
             <!-- Submission toast (for now) -->
             <div
               id="successToast"
@@ -1509,15 +2012,27 @@
             </div>
           </main>
         </div>
+        </div>
       </div>
     </div>
 
     <script>
-      // Tab management
-      const tabSession = document.getElementById('tab-session');
-      const tabAutomation = document.getElementById('tab-automation');
+      // Landing page and forms container
+      const landingPage = document.getElementById('landing-page');
+      const formsContainer = document.getElementById('forms-container');
+      const backToLandingBtn = document.getElementById('back-to-landing');
+      
+      // Option buttons
+      const optionSession = document.getElementById('option-session');
+      const optionAutomation = document.getElementById('option-automation');
+      const optionCqms = document.getElementById('option-cqms');
+      
+      // Forms
       const sessionForm = document.getElementById('n8n-form');
       const automationForm = document.getElementById('automation-form');
+      const cqmsForm = document.getElementById('cqms-form');
+      
+      // Header elements
       const headerBadge = document.getElementById('header-badge');
       const headerTitle = document.getElementById('header-title');
       const headerDescription = document.getElementById('header-description');
@@ -1567,6 +2082,24 @@
         'Success & Follow-up',
       ];
 
+      // CQMS form elements
+      const cqmsSteps = Array.from(cqmsForm.querySelectorAll('.step'));
+      const cqmsBackButton = document.getElementById('cqmsBackButton');
+      const cqmsNextButton = document.getElementById('cqmsNextButton');
+      const cqmsNextButtonLabel = document.getElementById('cqmsNextButtonLabel');
+      const cqmsNextButtonIcon = document.getElementById('cqmsNextButtonIcon');
+      const cqmsSubmitButton = document.getElementById('cqmsSubmitButton');
+      const cqmsStepPills = [
+        document.getElementById('step-pill-1'),
+        document.getElementById('step-pill-2'),
+        document.getElementById('step-pill-3'),
+      ];
+      const cqmsSubtitles = [
+        'Contact Information',
+        'Request Type & Details',
+        'Additional Information',
+      ];
+
       // Custom platform functionality
       const autoPlatformOther = document.getElementById('autoPlatformOther');
       const customPlatformsContainer = document.getElementById('customPlatformsContainer');
@@ -1575,50 +2108,70 @@
       let customPlatformCounter = 0;
 
       // State
-      let activeTab = 'session';
+      let activeForm = null; // 'session', 'automation', 'cqms'
       let sessionCurrentStep = 1;
       let automationCurrentStep = 1;
+      let cqmsCurrentStep = 1;
       let isSubmitting = false;
 
-      // Google Apps Script Web App endpoint (used for both session and automation forms)
+      // Google Apps Script Web App endpoint (used for all forms)
       // Replace this URL with your new deployment URL after updating the Google Apps Script
-      const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxO9Le_KmhaNvH7U-41g0VCet2Z77QQljrNW6deW-0mT95I1CjgdKI30qIr89GYsPvF/exec';
+      const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyaKCP4iv-bvYKI3LU2PafMYJvKEbLoZUdoC1PvpqvXPx0VXI8YlBZ4AOk79dLa_KiB/exec';
 
-      // Tab switching
-      function switchTab(tab) {
-        activeTab = tab;
+      // Show landing page
+      function showLandingPage() {
+        if (!landingPage || !formsContainer) {
+          console.error('landingPage or formsContainer not found');
+          return;
+        }
+        landingPage.classList.remove('hidden');
+        formsContainer.classList.add('hidden');
+        activeForm = null;
+      }
+
+      // Show form based on option selected
+      function showForm(formType) {
+        console.log('showForm called with:', formType);
+        console.log('landingPage:', landingPage);
+        console.log('formsContainer:', formsContainer);
         
-        // Update tab buttons
-        if (tab === 'session') {
-          tabSession.classList.add('active', 'border-primary-600', 'text-primary-600');
-          tabSession.classList.remove('border-transparent', 'text-slate-600');
-          tabAutomation.classList.remove('active', 'border-primary-600', 'text-primary-600');
-          tabAutomation.classList.add('border-transparent', 'text-slate-600');
-          sessionForm.classList.remove('hidden');
-          automationForm.classList.add('hidden');
-          
-          // Update header
-          headerBadge.textContent = 'n8n Session Request';
-          headerTitle.textContent = 'n8n Session Request Form';
-          headerDescription.innerHTML = 'Use this form to request an n8n learning or working session for your department. Sessions are run by <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span>. We&apos;ll use your answers to match the session depth, format, and scope to your team.';
-          
-          // Update progress for session form
+        if (!landingPage || !formsContainer) {
+          console.error('landingPage or formsContainer not found');
+          return;
+        }
+        
+        activeForm = formType;
+        landingPage.classList.add('hidden');
+        formsContainer.classList.remove('hidden');
+        
+        // Hide all forms first
+        if (sessionForm) sessionForm.classList.add('hidden');
+        if (automationForm) automationForm.classList.add('hidden');
+        if (cqmsForm) cqmsForm.classList.add('hidden');
+        
+        // Show selected form and update header
+        if (formType === 'session') {
+          if (sessionForm) sessionForm.classList.remove('hidden');
+          if (headerBadge) headerBadge.textContent = 'n8n Session Request';
+          if (headerTitle) headerTitle.textContent = 'n8n Session Request Form';
+          if (headerDescription) headerDescription.innerHTML = 'Use this form to request an n8n learning or working session for your department. Sessions are run by <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span>. We&apos;ll use your answers to match the session depth, format, and scope to your team.';
           updateSessionStep(sessionCurrentStep);
-        } else {
-          tabAutomation.classList.add('active', 'border-primary-600', 'text-primary-600');
-          tabAutomation.classList.remove('border-transparent', 'text-slate-600');
-          tabSession.classList.remove('active', 'border-primary-600', 'text-primary-600');
-          tabSession.classList.add('border-transparent', 'text-slate-600');
-          automationForm.classList.remove('hidden');
-          sessionForm.classList.add('hidden');
-          
-          // Update header
-          headerBadge.textContent = 'n8n Automation Request';
-          headerTitle.textContent = 'n8n Automation Request Form';
-          headerDescription.innerHTML = 'Use this form to request a custom n8n automation for your team. <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span> will review your request and build the automation that meets your needs.';
-          
-          // Update progress for automation form
+        } else if (formType === 'automation') {
+          if (automationForm) automationForm.classList.remove('hidden');
+          if (headerBadge) headerBadge.textContent = 'n8n Automation Request';
+          if (headerTitle) headerTitle.textContent = 'n8n Automation Request Form';
+          if (headerDescription) headerDescription.innerHTML = 'Use this form to request a custom n8n automation for your team. <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span> will review your request and build the automation that meets your needs.';
           updateAutomationStep(automationCurrentStep);
+        } else if (formType === 'cqms') {
+          if (cqmsForm) cqmsForm.classList.remove('hidden');
+          if (headerBadge) headerBadge.textContent = 'CQMS Bug/Feature Request';
+          if (headerTitle) headerTitle.textContent = 'CQMS Bug/Feature Request Form';
+          if (headerDescription) headerDescription.innerHTML = 'Report a bug or request a new feature for the CQMS system. Help us improve the platform by providing detailed information about your request.';
+          // Initialize tab to bug if function exists
+          if (typeof switchCqmsTab === 'function') {
+            switchCqmsTab('bug');
+          }
+          updateCqmsStep(cqmsCurrentStep);
         }
       }
 
@@ -1771,10 +2324,84 @@
         }
       }
 
+      // CQMS form step management
+      function updateCqmsStep(newStep) {
+        cqmsCurrentStep = newStep;
+
+        cqmsSteps.forEach((section) => {
+          section.classList.toggle('hidden', Number(section.dataset.step) !== cqmsCurrentStep);
+        });
+
+        progressLabel.textContent = `Step ${cqmsCurrentStep} of ${cqmsSteps.length}`;
+        progressSubtitle.textContent = cqmsSubtitles[cqmsCurrentStep - 1];
+
+        const percentage = (cqmsCurrentStep / cqmsSteps.length) * 100;
+        progressBar.style.width = `${percentage}%`;
+
+        // Hide 5th step pill for CQMS form
+        const step5Container = document.getElementById('step-pill-5-container');
+        if (step5Container) {
+          step5Container.classList.add('hidden');
+        }
+
+        // Reset tab to bug when going back to step 2
+        if (cqmsCurrentStep === 2 && typeof switchCqmsTab === 'function') {
+          switchCqmsTab('bug');
+        }
+
+        // Update step descriptions for CQMS
+        const cqmsStepTitles = [
+          'Contact Information',
+          'Request Type & Details',
+          'Additional Information'
+        ];
+        const cqmsStepDescs = [
+          'Who is requesting and contact information.',
+          'What type of request and detailed description.',
+          'Any additional context or information.'
+        ];
+
+        for (let i = 1; i <= 3; i++) {
+          const titleEl = document.getElementById(`step-title-${i}`);
+          const descEl = document.getElementById(`step-desc-${i}`);
+          if (titleEl && descEl) {
+            titleEl.textContent = cqmsStepTitles[i - 1];
+            descEl.textContent = cqmsStepDescs[i - 1];
+          }
+        }
+
+        cqmsStepPills.forEach((pill, index) => {
+          const stepIndex = index + 1;
+          pill.classList.remove('bg-primary-600', 'text-white', 'border-primary-600');
+          pill.classList.remove('bg-slate-900', 'text-slate-50', 'border-slate-900');
+          pill.classList.remove('bg-slate-100', 'text-slate-500', 'border-slate-200');
+
+          if (stepIndex < cqmsCurrentStep) {
+            pill.classList.add('bg-primary-600', 'text-white', 'border-primary-600');
+          } else if (stepIndex === cqmsCurrentStep) {
+            pill.classList.add('bg-slate-900', 'text-slate-50', 'border-slate-900');
+          } else {
+            pill.classList.add('bg-slate-100', 'text-slate-500', 'border-slate-200');
+          }
+        });
+
+        cqmsBackButton.disabled = cqmsCurrentStep === 1 || isSubmitting;
+
+        if (cqmsCurrentStep === cqmsSteps.length) {
+          cqmsNextButton.classList.add('hidden');
+          cqmsSubmitButton.classList.remove('hidden');
+        } else {
+          cqmsNextButton.classList.remove('hidden');
+          cqmsSubmitButton.classList.add('hidden');
+          cqmsNextButtonLabel.textContent = 'Next';
+          cqmsNextButtonIcon.textContent = '›';
+        }
+      }
+
       function setSubmitting(submitting) {
         isSubmitting = submitting;
 
-        if (activeTab === 'session') {
+        if (activeForm === 'session') {
           sessionBackButton.disabled = sessionCurrentStep === 1 || submitting;
           sessionNextButton.disabled = submitting;
           sessionSubmitButton.disabled = submitting;
@@ -1786,7 +2413,7 @@
             sessionSubmitButton.classList.remove('opacity-60', 'cursor-wait');
             sessionSubmitButton.textContent = 'Submit request';
           }
-        } else {
+        } else if (activeForm === 'automation') {
           automationBackButton.disabled = automationCurrentStep === 1 || submitting;
           automationNextButton.disabled = submitting;
           automationSubmitButton.disabled = submitting;
@@ -1798,12 +2425,36 @@
             automationSubmitButton.classList.remove('opacity-60', 'cursor-wait');
             automationSubmitButton.textContent = 'Submit request';
           }
+        } else if (activeForm === 'cqms') {
+          cqmsBackButton.disabled = cqmsCurrentStep === 1 || submitting;
+          cqmsNextButton.disabled = submitting;
+          cqmsSubmitButton.disabled = submitting;
+
+          if (submitting) {
+            cqmsSubmitButton.classList.add('opacity-60', 'cursor-wait');
+            cqmsSubmitButton.textContent = 'Submitting…';
+          } else {
+            cqmsSubmitButton.classList.remove('opacity-60', 'cursor-wait');
+            cqmsSubmitButton.textContent = 'Submit request';
+          }
         }
       }
 
       function validateCurrentStep() {
-        const steps = activeTab === 'session' ? sessionSteps : automationSteps;
-        const currentStep = activeTab === 'session' ? sessionCurrentStep : automationCurrentStep;
+        let steps, currentStep;
+        if (activeForm === 'session') {
+          steps = sessionSteps;
+          currentStep = sessionCurrentStep;
+        } else if (activeForm === 'automation') {
+          steps = automationSteps;
+          currentStep = automationCurrentStep;
+        } else if (activeForm === 'cqms') {
+          steps = cqmsSteps;
+          currentStep = cqmsCurrentStep;
+        } else {
+          return false;
+        }
+        
         const section = steps[currentStep - 1];
         const requiredFields = Array.from(section.querySelectorAll('[required]'));
         for (const field of requiredFields) {
@@ -1846,10 +2497,6 @@
           }
         });
       }
-
-      // Tab event listeners
-      tabSession.addEventListener('click', () => switchTab('session'));
-      tabAutomation.addEventListener('click', () => switchTab('automation'));
 
       // Session form navigation
       sessionBackButton.addEventListener('click', () => {
@@ -1993,6 +2640,271 @@
         }
       });
 
+      // Option button handlers - using event delegation as fallback
+      document.addEventListener('click', (e) => {
+        const target = e.target.closest('[data-option]');
+        if (!target) return;
+        
+        const option = target.getAttribute('data-option');
+        console.log('Option clicked via delegation:', option);
+        
+        if (option === 'session') {
+          e.preventDefault();
+          sessionCurrentStep = 1;
+          showForm('session');
+        } else if (option === 'automation') {
+          e.preventDefault();
+          automationCurrentStep = 1;
+          showForm('automation');
+        } else if (option === 'cqms') {
+          e.preventDefault();
+          cqmsCurrentStep = 1;
+          showForm('cqms');
+        }
+      });
+
+      // Also add direct listeners as primary method
+      if (optionSession) {
+        optionSession.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Session option clicked (direct)');
+          sessionCurrentStep = 1;
+          showForm('session');
+        });
+      } else {
+        console.error('optionSession element not found');
+      }
+
+      if (optionAutomation) {
+        optionAutomation.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Automation option clicked (direct)');
+          automationCurrentStep = 1;
+          showForm('automation');
+        });
+      } else {
+        console.error('optionAutomation element not found');
+      }
+
+      if (optionCqms) {
+        optionCqms.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('CQMS option clicked (direct)');
+          cqmsCurrentStep = 1;
+          showForm('cqms');
+        });
+      } else {
+        console.error('optionCqms element not found');
+      }
+
+      // Back to landing page
+      backToLandingBtn.addEventListener('click', () => {
+        showLandingPage();
+        // Reset forms
+        sessionCurrentStep = 1;
+        automationCurrentStep = 1;
+        cqmsCurrentStep = 1;
+      });
+
+      // CQMS tab switching
+      const cqmsTabBug = document.getElementById('cqms-tab-bug');
+      const cqmsTabFeature = document.getElementById('cqms-tab-feature');
+      const cqmsBugContent = document.getElementById('cqms-bug-content');
+      const cqmsFeatureContent = document.getElementById('cqms-feature-content');
+      const cqmsRequestTypeInput = document.getElementById('cqmsRequestType');
+      const cqmsBugEnvInfo = document.getElementById('cqms-bug-env-info');
+      let cqmsActiveTab = 'bug';
+
+      function switchCqmsTab(tab) {
+        if (!cqmsTabBug || !cqmsTabFeature || !cqmsBugContent || !cqmsFeatureContent || !cqmsRequestTypeInput) {
+          console.error('CQMS tab elements not found');
+          return;
+        }
+        
+        cqmsActiveTab = tab;
+        if (cqmsRequestTypeInput) cqmsRequestTypeInput.value = tab;
+
+        if (tab === 'bug') {
+          cqmsTabBug.classList.add('active', 'border-primary-600', 'text-primary-600');
+          cqmsTabBug.classList.remove('border-transparent', 'text-slate-600');
+          cqmsTabFeature.classList.remove('active', 'border-primary-600', 'text-primary-600');
+          cqmsTabFeature.classList.add('border-transparent', 'text-slate-600');
+          cqmsBugContent.classList.remove('hidden');
+          cqmsFeatureContent.classList.add('hidden');
+          if (cqmsBugEnvInfo) cqmsBugEnvInfo.classList.remove('hidden');
+          
+          // Set required fields for bug
+          const bugTitle = document.getElementById('cqmsBugTitle');
+          const bugDesc = document.getElementById('cqmsBugDescription');
+          const stepsRepro = document.getElementById('cqmsStepsToReproduce');
+          const expected = document.getElementById('cqmsExpectedBehavior');
+          const actual = document.getElementById('cqmsActualBehavior');
+          const frequency = document.getElementById('cqmsBugFrequency');
+          const bugPriority = document.getElementById('cqmsBugPriority');
+          
+          if (bugTitle) bugTitle.required = true;
+          if (bugDesc) bugDesc.required = true;
+          if (stepsRepro) stepsRepro.required = false; // Made optional
+          if (expected) expected.required = true;
+          if (actual) actual.required = true;
+          if (frequency) frequency.required = true;
+          if (bugPriority) bugPriority.required = true;
+          
+          // Remove required from feature fields
+          const featTitle = document.getElementById('cqmsFeatureTitle');
+          const featDesc = document.getElementById('cqmsFeatureDescription');
+          const useCase = document.getElementById('cqmsUseCase');
+          const benefits = document.getElementById('cqmsFeatureBenefits');
+          const featPriority = document.getElementById('cqmsFeaturePriority');
+          
+          if (featTitle) featTitle.required = false;
+          if (featDesc) featDesc.required = false;
+          if (useCase) useCase.required = false;
+          if (benefits) benefits.required = false;
+          if (featPriority) featPriority.required = false;
+        } else {
+          cqmsTabFeature.classList.add('active', 'border-primary-600', 'text-primary-600');
+          cqmsTabFeature.classList.remove('border-transparent', 'text-slate-600');
+          cqmsTabBug.classList.remove('active', 'border-primary-600', 'text-primary-600');
+          cqmsTabBug.classList.add('border-transparent', 'text-slate-600');
+          cqmsFeatureContent.classList.remove('hidden');
+          cqmsBugContent.classList.add('hidden');
+          if (cqmsBugEnvInfo) cqmsBugEnvInfo.classList.add('hidden');
+          
+          // Set required fields for feature
+          const featTitle = document.getElementById('cqmsFeatureTitle');
+          const featDesc = document.getElementById('cqmsFeatureDescription');
+          const useCase = document.getElementById('cqmsUseCase');
+          const benefits = document.getElementById('cqmsFeatureBenefits');
+          const featPriority = document.getElementById('cqmsFeaturePriority');
+          
+          if (featTitle) featTitle.required = true;
+          if (featDesc) featDesc.required = true;
+          if (useCase) useCase.required = true;
+          if (benefits) benefits.required = true;
+          if (featPriority) featPriority.required = true;
+          
+          // Remove required from bug fields
+          const bugTitle = document.getElementById('cqmsBugTitle');
+          const bugDesc = document.getElementById('cqmsBugDescription');
+          const stepsRepro = document.getElementById('cqmsStepsToReproduce');
+          const expected = document.getElementById('cqmsExpectedBehavior');
+          const actual = document.getElementById('cqmsActualBehavior');
+          const frequency = document.getElementById('cqmsBugFrequency');
+          const bugPriority = document.getElementById('cqmsBugPriority');
+          
+          if (bugTitle) bugTitle.required = false;
+          if (bugDesc) bugDesc.required = false;
+          if (stepsRepro) stepsRepro.required = false;
+          if (expected) expected.required = false;
+          if (actual) actual.required = false;
+          if (frequency) frequency.required = false;
+          if (bugPriority) bugPriority.required = false;
+        }
+      }
+
+      if (cqmsTabBug) {
+        cqmsTabBug.addEventListener('click', () => switchCqmsTab('bug'));
+      }
+      if (cqmsTabFeature) {
+        cqmsTabFeature.addEventListener('click', () => switchCqmsTab('feature'));
+      }
+
+      // CQMS form navigation
+      cqmsBackButton.addEventListener('click', () => {
+        if (cqmsCurrentStep > 1) {
+          updateCqmsStep(cqmsCurrentStep - 1);
+        }
+      });
+
+      cqmsNextButton.addEventListener('click', () => {
+        if (!validateCurrentStep()) return;
+        if (cqmsCurrentStep < cqmsSteps.length) {
+          updateCqmsStep(cqmsCurrentStep + 1);
+        }
+      });
+
+      // CQMS form submission
+      cqmsForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        if (isSubmitting) return;
+        if (!validateCurrentStep()) return;
+
+        const formData = new FormData(cqmsForm);
+        const payload = {};
+        
+        // Add form type to route to correct sheet
+        payload.formType = 'cqms';
+        payload.requestType = cqmsActiveTab; // 'bug' or 'feature'
+        
+        // Collect all form data
+        formData.forEach((value, key) => {
+          // Skip empty values for optional fields
+          if (!value || value.trim() === '') return;
+          
+          if (payload[key] === undefined) {
+            payload[key] = value;
+          } else if (Array.isArray(payload[key])) {
+            payload[key].push(value);
+          } else {
+            payload[key] = [payload[key], value];
+          }
+        });
+
+        // Collect screenshot/video URL
+        const screenshot = formData.get('cqmsScreenshot');
+        if (screenshot && screenshot.trim() !== '') {
+          payload.screenshot = screenshot.trim();
+        }
+
+        // Add unified title and description based on type
+        if (cqmsActiveTab === 'bug') {
+          payload.title = formData.get('cqmsBugTitle');
+          payload.description = formData.get('cqmsBugDescription');
+          payload.stepsToReproduce = formData.get('cqmsStepsToReproduce');
+          payload.expectedBehavior = formData.get('cqmsExpectedBehavior');
+          payload.actualBehavior = formData.get('cqmsActualBehavior');
+          payload.frequency = formData.get('cqmsBugFrequency');
+          payload.priority = formData.get('cqmsBugPriority');
+        } else {
+          payload.title = formData.get('cqmsFeatureTitle');
+          payload.description = formData.get('cqmsFeatureDescription');
+          payload.useCase = formData.get('cqmsUseCase');
+          payload.benefits = formData.get('cqmsFeatureBenefits');
+          payload.priority = formData.get('cqmsFeaturePriority');
+        }
+
+        try {
+          setSubmitting(true);
+          if (!SUBMIT_ENDPOINT || !SUBMIT_ENDPOINT.startsWith('http')) {
+            throw new Error('Submit endpoint is not configured.');
+          }
+
+          await fetch(SUBMIT_ENDPOINT, {
+            method: 'POST',
+            mode: 'no-cors',
+            body: JSON.stringify(payload),
+          });
+
+          successToast.classList.remove('opacity-0');
+          successToast.classList.add('opacity-100');
+
+          setTimeout(() => {
+            successToast.classList.remove('opacity-100');
+            successToast.classList.add('opacity-0');
+          }, 3200);
+
+          cqmsForm.reset();
+          switchCqmsTab('bug'); // Reset to bug tab
+          updateCqmsStep(1);
+        } catch (error) {
+          console.error('Error submitting form', error);
+          alert('Something went wrong while submitting. Please check the browser console for details or contact the team.');
+        } finally {
+          setSubmitting(false);
+        }
+      });
+
       // Custom platform checkbox handler
       autoPlatformOther.addEventListener('change', () => {
         if (autoPlatformOther.checked) {
@@ -2040,8 +2952,27 @@
         });
       }
 
-      // Initialize
-      switchTab('session');
+      // Initialize - show landing page
+      // Wait for DOM to be fully ready
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+          console.log('DOM loaded, initializing...');
+          console.log('landingPage:', landingPage);
+          console.log('formsContainer:', formsContainer);
+          console.log('optionSession:', optionSession);
+          console.log('optionAutomation:', optionAutomation);
+          console.log('optionCqms:', optionCqms);
+          showLandingPage();
+        });
+      } else {
+        console.log('DOM already loaded, initializing...');
+        console.log('landingPage:', landingPage);
+        console.log('formsContainer:', formsContainer);
+        console.log('optionSession:', optionSession);
+        console.log('optionAutomation:', optionAutomation);
+        console.log('optionCqms:', optionCqms);
+        showLandingPage();
+      }
     </script>
   </body>
 </html>
