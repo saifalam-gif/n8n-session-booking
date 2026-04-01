@@ -12,44 +12,339 @@
         theme: {
           extend: {
             fontFamily: {
-              sans: ['Inter', 'system-ui', 'sans-serif'],
+              sans: ['DM Sans', 'sans-serif'],
+              mono: ['DM Mono', 'monospace'],
+              display: ['Syne', 'sans-serif'],
             },
             colors: {
               primary: {
-                50: '#ecfdf5',
-                100: '#d1fae5',
-                500: '#10b981',
-                600: '#059669',
+                50: 'rgba(128, 85, 255, 0.12)',
+                100: 'rgba(128, 85, 255, 0.18)',
+                500: '#8055FF',
+                600: '#8055FF',
               },
             },
           },
         },
       };
     </script>
-
-    <!-- Inter font -->
-    <link
-      rel="preconnect"
-      href="https://fonts.googleapis.com"
-    />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap"
-      rel="stylesheet"
-    />
     <style>
-      .tab-button.active {
-        border-bottom-color: rgb(5, 150, 105);
-        color: rgb(5, 150, 105);
+      @import url('https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+      :root {
+        --color-bg-base: #160829;
+        --color-bg-surface: #1f0d38;
+        --color-bg-elevated: #2a1a42;
+        --color-brand: #8055FF;
+        --color-brand-light: #c4aeff;
+        --color-brand-subtle: rgba(128, 85, 255, 0.12);
+        --color-border: rgba(128, 85, 255, 0.18);
+        --color-border-strong: rgba(128, 85, 255, 0.35);
+        --color-text-primary: #f1eeff;
+        --color-text-secondary: rgba(241, 238, 255, 0.5);
+        --color-text-muted: rgba(241, 238, 255, 0.28);
+        --color-ok: #22c55e;
+        --color-ok-bg: rgba(34, 197, 94, 0.10);
+        --color-ok-border: rgba(34, 197, 94, 0.25);
+        --color-warn: #f59e0b;
+        --color-warn-bg: rgba(245, 158, 11, 0.10);
+        --color-warn-border: rgba(245, 158, 11, 0.25);
+        --color-crit: #ef4444;
+        --color-crit-bg: rgba(239, 68, 68, 0.10);
+        --color-crit-border: rgba(239, 68, 68, 0.25);
+        --color-data-1: #8055FF;
+        --color-data-2: #22c55e;
+        --color-data-3: #38bdf8;
+        --color-data-4: #f59e0b;
+        --color-data-5: #e879f9;
       }
+
+      html,
+      body {
+        background: var(--color-bg-base) !important;
+        color: var(--color-text-primary) !important;
+        font-family: 'DM Sans', sans-serif !important;
+      }
+
+      body {
+        background-image:
+          radial-gradient(ellipse 80% 50% at 20% -10%, rgba(128, 85, 255, 0.15) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 40% at 90% 80%, rgba(128, 85, 255, 0.08) 0%, transparent 60%);
+      }
+
+      h1,
+      h2,
+      h3 {
+        font-family: 'Syne', sans-serif !important;
+        color: #ffffff !important;
+        letter-spacing: -0.5px;
+      }
+
+      h1 { font-size: 30px !important; font-weight: 800 !important; letter-spacing: -0.8px !important; }
+      h2 { font-size: 22px !important; font-weight: 700 !important; letter-spacing: -0.6px !important; }
+      h3 { font-size: 16px !important; font-weight: 700 !important; }
+
+      p,
+      span,
+      label,
+      li,
+      a,
+      button,
+      input,
+      select,
+      textarea {
+        font-family: 'DM Sans', sans-serif !important;
+      }
+
+      p { font-size: 13px; line-height: 1.7; }
+
+      input[type='number'],
+      .font-mono {
+        font-family: 'DM Mono', monospace !important;
+      }
+
+      .tab-button.active,
       .cqms-tab-button.active {
-        border-bottom-color: rgb(5, 150, 105);
-        color: rgb(5, 150, 105);
+        border-bottom-color: var(--color-brand);
+        color: var(--color-brand-light);
       }
+
+      .bg-white { background-color: var(--color-bg-surface) !important; }
+      .bg-slate-50,
+      .bg-slate-100,
+      .bg-slate-200 { background-color: var(--color-bg-elevated) !important; }
+      .text-slate-900,
+      .text-slate-800,
+      .text-slate-700 { color: var(--color-text-primary) !important; }
+      .text-slate-600,
+      .text-slate-500,
+      .text-slate-400 { color: var(--color-text-secondary) !important; }
+      .border-slate-100,
+      .border-slate-200,
+      .border-slate-300,
+      .ring-slate-100 { border-color: var(--color-border) !important; --tw-ring-color: var(--color-border) !important; }
+      .text-primary-600,
+      .text-primary-500 { color: var(--color-brand-light) !important; }
+      .bg-primary-50,
+      .bg-primary-100 { background-color: var(--color-brand-subtle) !important; }
+      .border-primary-500 { border-color: var(--color-brand) !important; }
+      .from-primary-500,
+      .to-primary-600 { --tw-gradient-from: var(--color-brand) !important; --tw-gradient-to: var(--color-brand) !important; }
+
+      .rounded-3xl,
+      .rounded-2xl { border-radius: 14px !important; }
+      .rounded-xl,
+      .rounded-lg { border-radius: 10px !important; }
+      .rounded-full { border-radius: 99px !important; }
+
+      .shadow-\[0_18px_45px_rgba\(15\,23\,42\,0\.05\)\],
+      .shadow-\[0_1px_0_rgba\(15\,23\,42\,0\.04\)\],
+      .shadow-lg,
+      .shadow-sm { box-shadow: none !important; }
+
+      button#nextButton,
+      button#submitButton,
+      button[type='submit'] {
+        background: var(--color-brand);
+        color: #ffffff !important;
+        border: none;
+        border-radius: 8px !important;
+        font-family: 'DM Sans', sans-serif !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        padding: 8px 16px;
+      }
+
+      button#nextButton:hover,
+      button#submitButton:hover,
+      button[type='submit']:hover {
+        background: #9370ff;
+        border-color: var(--color-border-strong) !important;
+      }
+
+      button#backButton,
+      #back-to-landing {
+        background: var(--color-brand-subtle) !important;
+        color: var(--color-brand-light) !important;
+        border: 1px solid var(--color-border) !important;
+        border-radius: 8px !important;
+      }
+
+      button#backButton:hover,
+      #back-to-landing:hover {
+        border-color: var(--color-brand) !important;
+        background: var(--color-brand-subtle) !important;
+      }
+
+      button[disabled] {
+        opacity: 0.4 !important;
+        cursor: not-allowed !important;
+      }
+
+      .group.relative.flex.flex-col.items-start {
+        border: 1px solid var(--color-border) !important;
+        background: var(--color-bg-surface) !important;
+      }
+
+      .group.relative.flex.flex-col.items-start:hover {
+        background: var(--color-bg-elevated) !important;
+        border-color: var(--color-border-strong) !important;
+      }
+
+      /* Stronger section differentiation and reading hierarchy */
+      .step > .space-y-2 {
+        margin-bottom: 2px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .step > .space-y-2 h2 {
+        font-family: 'Syne', sans-serif !important;
+        font-size: 22px !important;
+        font-weight: 700 !important;
+        color: #ffffff !important;
+        letter-spacing: -0.6px !important;
+      }
+
+      .step > .space-y-2 p {
+        font-size: 12px !important;
+        color: var(--color-text-secondary) !important;
+        line-height: 1.7 !important;
+      }
+
+      .step .rounded-2xl {
+        border: 1px solid var(--color-border) !important;
+        background: var(--color-bg-surface) !important;
+      }
+
+      .step .rounded-2xl + .rounded-2xl {
+        margin-top: 14px !important;
+      }
+
+      .step .text-\[11px\].font-medium.uppercase,
+      .step legend.text-xs.font-medium {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--color-brand-light) !important;
+        letter-spacing: 1.2px !important;
+      }
+
+      .step .text-\[11px\].font-medium.uppercase::after,
+      .step legend.text-xs.font-medium::after {
+        content: '';
+        flex: 1;
+        border-top: 1px solid var(--color-border);
+      }
+
+      .step label.block.text-xs.font-medium {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 1.1px !important;
+        color: var(--color-text-muted) !important;
+      }
+
+      #header-badge {
+        color: var(--color-brand) !important;
+        letter-spacing: 1.6px !important;
+      }
+
+      #header-title {
+        font-family: 'Syne', sans-serif !important;
+        font-size: 30px !important;
+        font-weight: 800 !important;
+      }
+
+      #header-description {
+        color: var(--color-text-secondary) !important;
+        font-size: 12px !important;
+        line-height: 1.7 !important;
+      }
+
+      aside {
+        background: rgba(255, 255, 255, 0.04) !important;
+        border: 1px solid var(--color-border) !important;
+        border-radius: 12px !important;
+        padding: 16px 18px !important;
+      }
+
+      #progress-label,
+      #progress-subtitle {
+        font-family: 'DM Mono', monospace !important;
+        font-size: 10px !important;
+        letter-spacing: 0.6px !important;
+      }
+
+      [id^='step-pill-'] {
+        border-color: var(--color-border) !important;
+        color: var(--color-text-secondary) !important;
+        font-family: 'DM Mono', monospace !important;
+      }
+
+      input,
+      select,
+      textarea {
+        background: rgba(0, 0, 0, 0.3) !important;
+        border: 1px solid var(--color-border) !important;
+        border-radius: 8px !important;
+        padding: 9px 12px !important;
+        font-size: 12px !important;
+        color: var(--color-text-secondary) !important;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--color-brand) !important;
+        outline: none !important;
+        --tw-ring-color: transparent !important;
+      }
+
+      .text-\[11px\],
+      .text-\[10px\],
+      .text-xs,
+      legend,
+      thead th,
+      .uppercase {
+        letter-spacing: 1px !important;
+      }
+
+      .text-\[10px\],
+      .text-\[11px\],
+      .text-xs.uppercase,
+      legend {
+        font-size: 10px !important;
+        font-weight: 700 !important;
+        text-transform: uppercase;
+        color: var(--color-text-muted) !important;
+      }
+
+      #progress-bar {
+        background: var(--color-brand) !important;
+        border-radius: 99px !important;
+        transition: width 0.5s ease;
+      }
+
+      .relative.h-1\.5 {
+        background: rgba(128, 85, 255, 0.15) !important;
+        border-radius: 99px !important;
+        height: 5px !important;
+      }
+
+      .hover\:border-primary-500:hover { border-color: var(--color-border-strong) !important; }
+      .hover\:shadow-lg:hover { box-shadow: none !important; }
+      .hover\:text-slate-900:hover { color: var(--color-text-primary) !important; }
+      .focus\:ring-2:focus,
+      .focus\:ring-primary-500:focus,
+      .focus\:ring-offset-2:focus,
+      .focus\:ring-primary-100:focus { --tw-ring-color: transparent !important; box-shadow: none !important; }
+      .focus\:border-primary-500:focus { border-color: var(--color-brand) !important; }
+
+      ::-webkit-scrollbar { width: 6px; height: 6px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: rgba(128, 85, 255, 0.3); border-radius: 99px; }
+      ::-webkit-scrollbar-thumb:hover { background: rgba(128, 85, 255, 0.5); }
     </style>
   </head>
   <body class="min-h-screen bg-slate-50 font-sans text-slate-900">
@@ -59,13 +354,13 @@
         <div id="landing-page" class="p-6 sm:p-10">
           <header class="mb-10 text-center">
             <p class="text-xs font-medium uppercase tracking-[0.2em] text-primary-600 mb-3">
-              Team D.A.R Services
+              HR Analytics Team Services
             </p>
             <h1 class="text-3xl font-semibold text-slate-900 mb-3">
               How can we help you?
             </h1>
             <p class="text-sm leading-relaxed text-slate-600 max-w-2xl mx-auto">
-              Select a service below to get started. Our <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span> is here to assist you.
+              Select a service below to get started. Our <span class="font-semibold text-slate-800">HR Analytics Team</span> is here to assist you.
             </p>
           </header>
 
@@ -111,17 +406,21 @@
             <button
               type="button"
               id="option-cqms"
-              class="group relative flex flex-col items-start rounded-2xl border-2 border-slate-200 bg-white p-6 text-left transition-all hover:border-primary-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              class="group relative flex flex-col items-start rounded-2xl border-2 border-slate-200 bg-slate-50 p-6 text-left transition-all cursor-not-allowed opacity-75"
               data-option="cqms"
+              disabled
             >
-              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-100">
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-slate-200 text-slate-400">
                 <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
                 </svg>
               </div>
-              <h3 class="mb-2 text-lg font-semibold text-slate-900">Bug/Feature Request for CQMS</h3>
+              <div class="mb-2 flex items-center gap-2">
+                <h3 class="text-lg font-semibold text-slate-600">Bug/Feature Request for CQMS</h3>
+                <span class="rounded-full bg-slate-300 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-slate-600">Moved</span>
+              </div>
               <p class="text-sm text-slate-600">
-                Report a bug or request a new feature for the CQMS system. Help us improve the platform.
+                CQMS ownership has been transferred to the CEx R&D team. Please contact them for bug reports and feature requests.
               </p>
             </button>
 
@@ -175,7 +474,7 @@
               </h1>
               <p class="text-sm leading-relaxed text-slate-600" id="header-description">
                 Use this form to request an n8n learning or working session for your department.
-                Sessions are run by <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span>.
+                Sessions are run by <span class="font-semibold text-slate-800">HR Analytics Team</span>.
                 We'll use your answers to match the session depth, format, and scope to your team.
               </p>
             </header>
@@ -1015,7 +1314,7 @@
                         Additional notes or preferences (optional)
                       </label>
                       <p class="text-[11px] text-slate-500">
-                        Anything else that would help Team D.A.R design the session for your team
+                        Anything else that would help HR Analytics Team design the session for your team
                         (examples, tools, constraints, or follow-up ideas).
                       </p>
                       <textarea
@@ -2154,13 +2453,13 @@
           if (sessionForm) sessionForm.classList.remove('hidden');
           if (headerBadge) headerBadge.textContent = 'n8n Session Request';
           if (headerTitle) headerTitle.textContent = 'n8n Session Request Form';
-          if (headerDescription) headerDescription.innerHTML = 'Use this form to request an n8n learning or working session for your department. Sessions are run by <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span>. We&apos;ll use your answers to match the session depth, format, and scope to your team.';
+          if (headerDescription) headerDescription.innerHTML = 'Use this form to request an n8n learning or working session for your department. Sessions are run by <span class="font-semibold text-slate-800">HR Analytics Team</span>. We&apos;ll use your answers to match the session depth, format, and scope to your team.';
           updateSessionStep(sessionCurrentStep);
         } else if (formType === 'automation') {
           if (automationForm) automationForm.classList.remove('hidden');
           if (headerBadge) headerBadge.textContent = 'n8n Automation Request';
           if (headerTitle) headerTitle.textContent = 'n8n Automation Request Form';
-          if (headerDescription) headerDescription.innerHTML = 'Use this form to request a custom n8n automation for your team. <span class="font-semibold text-slate-800">Team D.A.R (Data Automation &amp; Research)</span> will review your request and build the automation that meets your needs.';
+          if (headerDescription) headerDescription.innerHTML = 'Use this form to request a custom n8n automation for your team. <span class="font-semibold text-slate-800">HR Analytics Team</span> will review your request and build the automation that meets your needs.';
           updateAutomationStep(automationCurrentStep);
         } else if (formType === 'cqms') {
           if (cqmsForm) cqmsForm.classList.remove('hidden');
