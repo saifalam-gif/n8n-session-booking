@@ -9,7 +9,7 @@ const NOTIFY_RECIPIENTS = [
 
 // 2) ClickUp API Configuration
 // Get your ClickUp API token from: https://app.clickup.com/settings/apps
-const CLICKUP_API_TOKEN = 'pk_101464525_0BT4XE4MR119HGRR63U112K9W9EPM09N';
+const CLICKUP_API_TOKEN = 'pk_49319525_NB7Q57OZVPKAHESPPO5XD7DFT445V599';
 
 // ClickUp List ID where tasks will be created
 // List URL: https://app.clickup.com/3480971/v/l/li/901814926964
@@ -19,14 +19,57 @@ const CLICKUP_LIST_ID = '901814926964';
 // Optional: Set to true to enable ClickUp task creation, false to disable
 const ENABLE_CLICKUP_TASKS = true;
 
+// Leave blank if you open this script via Extensions → Apps Script from the target Google Sheet (bound project).
+// If the project is standalone (script.google.com only), paste the Sheet ID from the browser URL: .../d/SHEET_ID/edit
+const SPREADSHEET_ID = '';
+
+function getRequestSpreadsheet() {
+  if (SPREADSHEET_ID && String(SPREADSHEET_ID).length > 10) {
+    return SpreadsheetApp.openById(SPREADSHEET_ID);
+  }
+  return SpreadsheetApp.getActiveSpreadsheet();
+}
+
+/**
+ * JSON from: (1) form field `data` — check this BEFORE postData.contents, because form POSTs put
+ * "data=%7B..." in postData.contents which is not valid JSON. (2) fetch text/plain body.
+ */
+function parseRequestJson(e) {
+  var raw = '';
+
+  if (e && e.parameter && e.parameter.data) {
+    raw = String(e.parameter.data);
+  }
+
+  if (!raw && e && e.postData && typeof e.postData.contents === 'string') {
+    raw = e.postData.contents.trim();
+    // Raw application/x-www-form-urlencoded body: data=<urlencoded json>
+    if (raw.indexOf('data=') === 0) {
+      raw = decodeURIComponent(raw.substring(5).replace(/\+/g, ' '));
+    } else if (raw.indexOf('&') !== -1 && raw.indexOf('data=') !== -1) {
+      var m = raw.match(/(?:^|&)data=([^&]*)/);
+      if (m) {
+        raw = decodeURIComponent(m[1].replace(/\+/g, ' '));
+      }
+    }
+  }
+
+  if (!raw) {
+    throw new Error('No POST body (use fetch with text/plain body or form field named data)');
+  }
+  return JSON.parse(raw);
+}
+
 function doPost(e) {
   try {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
-    const data = JSON.parse(e.postData.contents);
+    const ss = getRequestSpreadsheet();
+    const data = parseRequestJson(e);
     const formType = data.formType || 'session'; // Default to 'session' for backward compatibility
 
     if (formType === 'automation') {
       handleAutomationRequest(ss, data);
+    } else if (formType === 'dashboard') {
+      handleDashboardRequest(ss, data);
     } else if (formType === 'cqms') {
       handleCqmsRequest(ss, data);
     } else {
@@ -255,6 +298,80 @@ function handleAutomationRequest(ss, data) {
     (data.autoSuccessMetrics ? `Success Metrics:\n${data.autoSuccessMetrics}\n\n` : '') +
     (data.autoAdditionalNotes ? `Additional Notes:\n${data.autoAdditionalNotes}\n\n` : '') +
     'View the full request in the Google Sheet:\n' +
+    ss.getUrl() + '#gid=' + sheet.getSheetId();
+
+  MailApp.sendEmail({
+    to: NOTIFY_RECIPIENTS.join(','),
+    subject,
+    body,
+  });
+}
+
+// Handle Dashboard Request Form
+function handleDashboardRequest(ss, data) {
+  const sheetName = 'HR dashboard requests';
+  let sheet = ss.getSheetByName(sheetName);
+  if (!sheet) {
+    sheet = ss.insertSheet(sheetName);
+  }
+
+  const headers = [
+    'timestamp',
+    'department',
+    'pocName',
+    'pocEmail',
+    'dashboardTitle',
+    'dashboardDetails',
+    'urgency',
+    'notes',
+    'status',
+    'assignedTo',
+    'internalNotes',
+    'estimatedCompletion',
+    'actualCompletion',
+  ];
+
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(headers);
+  }
+
+  const row = [
+    new Date(),
+    data.dashDepartment || '',
+    data.dashPocName || '',
+    data.dashPocEmail || '',
+    data.dashboardTitle || '',
+    data.dashboardDetails || '',
+    data.dashUrgency || '',
+    data.dashNotes || '',
+    'New',
+    '',
+    '',
+    '',
+    '',
+  ];
+
+  sheet.appendRow(row);
+
+  if (ENABLE_CLICKUP_TASKS && CLICKUP_API_TOKEN !== 'YOUR_CLICKUP_API_TOKEN_HERE' && CLICKUP_LIST_ID !== 'YOUR_CLICKUP_LIST_ID_HERE') {
+    try {
+      createClickUpTask('dashboard', data, ss.getUrl() + '#gid=' + sheet.getSheetId());
+    } catch (error) {
+      console.error('Error creating ClickUp task:', error);
+    }
+  }
+
+  const subject = `New dashboard request – ${data.dashboardTitle || 'Untitled'}`;
+
+  const body =
+    'A new dashboard request has been submitted.\n\n' +
+    `Department: ${data.dashDepartment || 'Unknown'}\n` +
+    `Contact: ${data.dashPocName || ''} (${data.dashPocEmail || ''})\n\n` +
+    `Title: ${data.dashboardTitle || 'Untitled'}\n\n` +
+    `Description:\n${data.dashboardDetails || ''}\n\n` +
+    `When needed: ${data.dashUrgency || ''}\n` +
+    (data.dashNotes ? `\nOther notes:\n${data.dashNotes}\n` : '') +
+    '\nView in Google Sheet:\n' +
     ss.getUrl() + '#gid=' + sheet.getSheetId();
 
   MailApp.sendEmail({
@@ -495,6 +612,18 @@ function createClickUpTask(formType, data, sheetUrl) {
       (data.autoSuccessMetrics ? `\nSuccess Metrics:\n${data.autoSuccessMetrics}\n` : '') +
       (data.autoAdditionalNotes ? `\nAdditional Notes:\n${data.autoAdditionalNotes}\n` : '') +
       `\nView in Google Sheet:\n${sheetUrl}`;
+  } else if (formType === 'dashboard') {
+    taskName = `Dashboard: ${data.dashboardTitle || 'Untitled'}`;
+    tags = ['dashboard', 'analytics'];
+
+    taskDescription =
+      `Department: ${data.dashDepartment || 'Unknown'}\n` +
+      `Contact: ${data.dashPocName || ''} (${data.dashPocEmail || ''})\n\n` +
+      `Title: ${data.dashboardTitle || 'Untitled'}\n\n` +
+      `Description:\n${data.dashboardDetails || ''}\n\n` +
+      `When needed: ${data.dashUrgency || ''}\n` +
+      (data.dashNotes ? `\nNotes:\n${data.dashNotes}\n` : '') +
+      `\nView in Google Sheet:\n${sheetUrl}`;
   } else if (formType === 'cqms') {
     // CQMS Bug/Feature Request Task
     const requestType = data.requestType || 'bug';
@@ -575,6 +704,10 @@ function createClickUpTask(formType, data, sheetUrl) {
     priority = 1; // Urgent
   } else if (formType === 'automation' && data.autoUrgency === 'Within 1 week') {
     priority = 2; // High
+  } else if (formType === 'dashboard' && data.dashUrgency === 'As soon as possible') {
+    priority = 1;
+  } else if (formType === 'dashboard' && data.dashUrgency === 'Within a few weeks') {
+    priority = 2;
   } else if (formType === 'cqms') {
     // Map CQMS priority to ClickUp priority
     const cqmsPriority = data.priority || (data.requestType === 'bug' ? data.cqmsBugPriority : data.cqmsFeaturePriority);

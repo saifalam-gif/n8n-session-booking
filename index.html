@@ -135,6 +135,24 @@
               </p>
             </button>
 
+            <!-- Dashboard Request -->
+            <button
+              type="button"
+              id="option-dashboard"
+              class="group relative flex flex-col items-start rounded-2xl border-2 border-slate-200 bg-white p-6 text-left transition-all hover:border-primary-500 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
+              data-option="dashboard"
+            >
+              <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-100">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h3 class="mb-2 text-lg font-semibold text-slate-900">Dashboard Request</h3>
+              <p class="text-sm text-slate-600">
+                Ask HR Analytics for a dashboard or report. Quick form — we’ll follow up with questions if needed.
+              </p>
+            </button>
+
             <!-- Bug-Feature Request for CQMS -->
             <button
               type="button"
@@ -1615,6 +1633,156 @@
               </div>
             </form>
 
+            <!-- Dashboard Request Form (short — 2 steps) -->
+            <form id="dashboard-form" class="form-container space-y-10 hidden" data-form-type="dashboard">
+              <section data-step="1" class="step space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">Your details</h2>
+                  <p class="text-xs text-slate-500">So we can reply to you.</p>
+                </div>
+                <div class="space-y-5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="space-y-1.5 sm:col-span-2">
+                      <label for="dashDepartment" class="block text-xs font-medium text-slate-700">Department</label>
+                      <select
+                        id="dashDepartment"
+                        name="dashDepartment"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        required
+                      >
+                        <option value="">Select department</option>
+                        <option value="Quality, Performance & Training">Quality, Performance & Training</option>
+                        <option value="People & Culture">People & Culture</option>
+                        <option value="Payments & Treasury">Payments & Treasury</option>
+                        <option value="Marketing">Marketing</option>
+                        <option value="Lanka Operations">Lanka Operations</option>
+                        <option value="Finance & Audit">Finance & Audit</option>
+                        <option value="CEO's Office">CEO's Office</option>
+                        <option value="Admin, Compliance & Corporate Affairs">Admin, Compliance & Corporate Affairs</option>
+                        <option value="Trading & Risk Management">Trading & Risk Management</option>
+                        <option value="Technology">Technology</option>
+                        <option value="Product & BI">Product & BI</option>
+                        <option value="Operations">Operations</option>
+                        <option value="Community & Partner Management">Community & Partner Management</option>
+                        <option value="Client Experience">Client Experience</option>
+                        <option value="Trading & Risk Operations">Trading & Risk Operations</option>
+                        <option value="Sales">Sales</option>
+                        <option value="Project Management">Project Management</option>
+                        <option value="Back Office">Back Office</option>
+                        <option value="Business Development">Business Development</option>
+                      </select>
+                    </div>
+                    <div class="space-y-1.5">
+                      <label for="dashPocName" class="block text-xs font-medium text-slate-700">Your name</label>
+                      <input
+                        id="dashPocName"
+                        name="dashPocName"
+                        type="text"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="Full name"
+                        required
+                      />
+                    </div>
+                    <div class="space-y-1.5">
+                      <label for="dashPocEmail" class="block text-xs font-medium text-slate-700">Work email</label>
+                      <input
+                        id="dashPocEmail"
+                        name="dashPocEmail"
+                        type="email"
+                        class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                        placeholder="name@company.com"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section data-step="2" class="step hidden space-y-7">
+                <div class="space-y-2">
+                  <h2 class="text-sm font-semibold text-slate-900">What you need</h2>
+                  <p class="text-xs text-slate-500">
+                    A short title plus a free-text description is enough. Include metrics, data you have in mind, and timing if it matters.
+                  </p>
+                </div>
+                <div class="space-y-5 rounded-2xl border border-slate-100 bg-white px-4 py-5 sm:px-6 shadow-[0_1px_0_rgba(15,23,42,0.04)]">
+                  <div class="space-y-1.5">
+                    <label for="dashboardTitle" class="block text-xs font-medium text-slate-700">Title</label>
+                    <input
+                      id="dashboardTitle"
+                      name="dashboardTitle"
+                      type="text"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="e.g. Monthly hiring dashboard"
+                      required
+                    />
+                  </div>
+                  <div class="space-y-1.5">
+                    <label for="dashboardDetails" class="block text-xs font-medium text-slate-700">Describe the dashboard</label>
+                    <textarea
+                      id="dashboardDetails"
+                      name="dashboardDetails"
+                      rows="6"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="What should it show? Who is it for? Any known data sources or tools? We can clarify the rest with you."
+                      required
+                    ></textarea>
+                  </div>
+                  <div class="space-y-1.5">
+                    <label for="dashUrgency" class="block text-xs font-medium text-slate-700">When do you need it?</label>
+                    <select
+                      id="dashUrgency"
+                      name="dashUrgency"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      required
+                    >
+                      <option value="">Select one</option>
+                      <option>As soon as possible</option>
+                      <option>Within a few weeks</option>
+                      <option>Within a few months</option>
+                      <option>No fixed deadline</option>
+                    </select>
+                  </div>
+                  <div class="space-y-1.5">
+                    <label for="dashNotes" class="block text-xs font-medium text-slate-700">Anything else? (optional)</label>
+                    <textarea
+                      id="dashNotes"
+                      name="dashNotes"
+                      rows="2"
+                      class="block w-full rounded-lg border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm outline-none transition focus:border-primary-500 focus:ring-2 focus:ring-primary-100"
+                      placeholder="Links, access constraints, or stakeholders…"
+                    ></textarea>
+                  </div>
+                </div>
+              </section>
+
+              <div class="flex items-center justify-between border-t border-slate-100 pt-4">
+                <button
+                  type="button"
+                  id="dashBackButton"
+                  class="inline-flex items-center gap-1 rounded-full border border-slate-200 bg-white px-4 py-1.5 text-xs font-medium text-slate-700 shadow-sm transition hover:bg-slate-50 disabled:cursor-not-allowed disabled:opacity-40"
+                >
+                  <span aria-hidden="true" class="text-slate-400">‹</span>
+                  Previous
+                </button>
+                <button
+                  type="button"
+                  id="dashNextButton"
+                  class="inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                >
+                  <span id="dashNextButtonLabel">Next</span>
+                  <span aria-hidden="true" id="dashNextButtonIcon">›</span>
+                </button>
+                <button
+                  type="submit"
+                  id="dashSubmitButton"
+                  class="hidden inline-flex items-center gap-2 rounded-full bg-primary-600 px-5 py-1.5 text-xs font-medium text-white shadow-sm transition hover:bg-primary-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-300"
+                >
+                  Submit request
+                </button>
+              </div>
+            </form>
+
             <!-- CQMS Bug/Feature Request Form -->
             <form id="cqms-form" class="form-container space-y-10 hidden" data-form-type="cqms">
               <!-- Step 1: Contact Information -->
@@ -2057,11 +2225,13 @@
       // Option buttons
       const optionSession = document.getElementById('option-session');
       const optionAutomation = document.getElementById('option-automation');
+      const optionDashboard = document.getElementById('option-dashboard');
       const optionCqms = document.getElementById('option-cqms');
       
       // Forms
       const sessionForm = document.getElementById('n8n-form');
       const automationForm = document.getElementById('automation-form');
+      const dashboardForm = document.getElementById('dashboard-form');
       const cqmsForm = document.getElementById('cqms-form');
       
       // Header elements
@@ -2132,6 +2302,14 @@
         'Additional Information',
       ];
 
+      const dashboardSteps = dashboardForm ? Array.from(dashboardForm.querySelectorAll('.step')) : [];
+      const dashBackButton = document.getElementById('dashBackButton');
+      const dashNextButton = document.getElementById('dashNextButton');
+      const dashNextButtonLabel = document.getElementById('dashNextButtonLabel');
+      const dashNextButtonIcon = document.getElementById('dashNextButtonIcon');
+      const dashSubmitButton = document.getElementById('dashSubmitButton');
+      const dashboardSubtitles = ['Your details', 'What you need'];
+
       // Custom platform functionality
       const autoPlatformOther = document.getElementById('autoPlatformOther');
       const customPlatformsContainer = document.getElementById('customPlatformsContainer');
@@ -2140,15 +2318,81 @@
       let customPlatformCounter = 0;
 
       // State
-      let activeForm = null; // 'session', 'automation', 'cqms'
+      let activeForm = null; // 'session', 'automation', 'dashboard', 'cqms'
       let sessionCurrentStep = 1;
       let automationCurrentStep = 1;
+      let dashboardCurrentStep = 1;
       let cqmsCurrentStep = 1;
       let isSubmitting = false;
 
       // Google Apps Script Web App endpoint (used for all forms)
-      // Replace this URL with your new deployment URL after updating the Google Apps Script
-      const SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyaKCP4iv-bvYKI3LU2PafMYJvKEbLoZUdoC1PvpqvXPx0VXI8YlBZ4AOk79dLa_KiB/exec';
+      const SUBMIT_ENDPOINT =
+        'https://script.google.com/a/macros/nextventures.io/s/AKfycbzIS22HCgjwnoCF2dLZfBKwi1vFjSuYT-qTQCahfpZZbmye9UICZU2S-ssp_PdveRQK/exec';
+
+      /**
+       * http(s) hosted: fetch keeps you on this page (no redirect).
+       * file:// only: POST via hidden iframe (no new tab). Prefer hosting on http://localhost or HTTPS so fetch works reliably.
+       */
+      async function sendFormPayload(payload) {
+        const body = JSON.stringify(payload);
+        if (!SUBMIT_ENDPOINT || !SUBMIT_ENDPOINT.startsWith('http')) {
+          throw new Error('Submit endpoint is not configured.');
+        }
+
+        const isLocalFile = window.location.protocol === 'file:';
+
+        if (isLocalFile) {
+          await new Promise((resolve) => {
+            let done = false;
+            const finish = () => {
+              if (done) return;
+              done = true;
+              try {
+                if (form.parentNode) form.parentNode.removeChild(form);
+              } catch (err) { /* ignore */ }
+              try {
+                if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+              } catch (err2) { /* ignore */ }
+              resolve();
+            };
+
+            const iframe = document.createElement('iframe');
+            const frameName = 'gas_submit_' + Date.now();
+            iframe.name = frameName;
+            iframe.title = 'Submission';
+            iframe.style.cssText = 'position:absolute;width:0;height:0;border:0;visibility:hidden';
+            iframe.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(iframe);
+
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = SUBMIT_ENDPOINT;
+            form.target = frameName;
+            form.acceptCharset = 'UTF-8';
+
+            const input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'data';
+            input.value = body;
+            form.appendChild(input);
+
+            document.body.appendChild(form);
+
+            iframe.addEventListener('load', () => setTimeout(finish, 400));
+            setTimeout(finish, 8000);
+
+            form.submit();
+          });
+          return;
+        }
+
+        await fetch(SUBMIT_ENDPOINT, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body,
+        });
+      }
 
       // Show landing page
       function showLandingPage() {
@@ -2179,6 +2423,7 @@
         // Hide all forms first
         if (sessionForm) sessionForm.classList.add('hidden');
         if (automationForm) automationForm.classList.add('hidden');
+        if (dashboardForm) dashboardForm.classList.add('hidden');
         if (cqmsForm) cqmsForm.classList.add('hidden');
         
         // Show selected form and update header
@@ -2194,6 +2439,12 @@
           if (headerTitle) headerTitle.textContent = 'n8n Automation Request Form';
           if (headerDescription) headerDescription.innerHTML = 'Use this form to request a custom n8n automation for your team. <span class="font-semibold text-slate-800">HR Analytics Team</span> will review your request and build the automation that meets your needs.';
           updateAutomationStep(automationCurrentStep);
+        } else if (formType === 'dashboard') {
+          if (dashboardForm) dashboardForm.classList.remove('hidden');
+          if (headerBadge) headerBadge.textContent = 'Dashboard Request';
+          if (headerTitle) headerTitle.textContent = 'Dashboard Request Form';
+          if (headerDescription) headerDescription.innerHTML = 'Tell us what dashboard or report you need in a couple of steps. <span class="font-semibold text-slate-800">HR Analytics Team</span> will follow up if we need more detail.';
+          updateDashboardStep(dashboardCurrentStep);
         } else if (formType === 'cqms') {
           if (cqmsForm) cqmsForm.classList.remove('hidden');
           if (headerBadge) headerBadge.textContent = 'CQMS Bug/Feature Request';
@@ -2210,6 +2461,11 @@
       // Session form step management
       function updateSessionStep(newStep) {
         sessionCurrentStep = newStep;
+
+        [3, 4].forEach((n) => {
+          const li = document.getElementById(`step-pill-${n}`)?.closest('li');
+          if (li) li.classList.remove('hidden');
+        });
 
         sessionSteps.forEach((section) => {
           section.classList.toggle('hidden', Number(section.dataset.step) !== sessionCurrentStep);
@@ -2281,6 +2537,11 @@
       // Automation form step management
       function updateAutomationStep(newStep) {
         automationCurrentStep = newStep;
+
+        [3, 4].forEach((n) => {
+          const li = document.getElementById(`step-pill-${n}`)?.closest('li');
+          if (li) li.classList.remove('hidden');
+        });
 
         automationSteps.forEach((section) => {
           section.classList.toggle('hidden', Number(section.dataset.step) !== automationCurrentStep);
@@ -2360,6 +2621,11 @@
       function updateCqmsStep(newStep) {
         cqmsCurrentStep = newStep;
 
+        [3, 4].forEach((n) => {
+          const li = document.getElementById(`step-pill-${n}`)?.closest('li');
+          if (li) li.classList.remove('hidden');
+        });
+
         cqmsSteps.forEach((section) => {
           section.classList.toggle('hidden', Number(section.dataset.step) !== cqmsCurrentStep);
         });
@@ -2430,6 +2696,76 @@
         }
       }
 
+      function updateDashboardStep(newStep) {
+        if (!dashboardForm || dashboardSteps.length === 0) return;
+        dashboardCurrentStep = newStep;
+
+        [3, 4].forEach((n) => {
+          const li = document.getElementById(`step-pill-${n}`)?.closest('li');
+          if (li) li.classList.add('hidden');
+        });
+
+        dashboardSteps.forEach((section) => {
+          section.classList.toggle('hidden', Number(section.dataset.step) !== dashboardCurrentStep);
+        });
+
+        progressLabel.textContent = `Step ${dashboardCurrentStep} of ${dashboardSteps.length}`;
+        progressSubtitle.textContent = dashboardSubtitles[dashboardCurrentStep - 1];
+
+        const percentage = (dashboardCurrentStep / dashboardSteps.length) * 100;
+        progressBar.style.width = `${percentage}%`;
+
+        const step5Container = document.getElementById('step-pill-5-container');
+        if (step5Container) {
+          step5Container.classList.add('hidden');
+        }
+
+        const dashboardStepTitles = ['Your details', 'What you need'];
+        const dashboardStepDescs = [
+          'Department and how to reach you.',
+          'Title, description, and timing.',
+        ];
+
+        for (let i = 1; i <= 2; i++) {
+          const titleEl = document.getElementById(`step-title-${i}`);
+          const descEl = document.getElementById(`step-desc-${i}`);
+          if (titleEl && descEl) {
+            titleEl.textContent = dashboardStepTitles[i - 1];
+            descEl.textContent = dashboardStepDescs[i - 1];
+          }
+        }
+
+        sessionStepPills.slice(0, 2).forEach((pill, index) => {
+          const stepIndex = index + 1;
+          if (!pill) return;
+          pill.classList.remove('bg-primary-600', 'text-white', 'border-primary-600');
+          pill.classList.remove('bg-slate-900', 'text-slate-50', 'border-slate-900');
+          pill.classList.remove('bg-slate-100', 'text-slate-500', 'border-slate-200');
+
+          if (stepIndex < dashboardCurrentStep) {
+            pill.classList.add('bg-primary-600', 'text-white', 'border-primary-600');
+          } else if (stepIndex === dashboardCurrentStep) {
+            pill.classList.add('bg-slate-900', 'text-slate-50', 'border-slate-900');
+          } else {
+            pill.classList.add('bg-slate-100', 'text-slate-500', 'border-slate-200');
+          }
+        });
+
+        if (dashBackButton) {
+          dashBackButton.disabled = dashboardCurrentStep === 1 || isSubmitting;
+        }
+
+        if (dashboardCurrentStep === dashboardSteps.length) {
+          if (dashNextButton) dashNextButton.classList.add('hidden');
+          if (dashSubmitButton) dashSubmitButton.classList.remove('hidden');
+        } else {
+          if (dashNextButton) dashNextButton.classList.remove('hidden');
+          if (dashSubmitButton) dashSubmitButton.classList.add('hidden');
+          if (dashNextButtonLabel) dashNextButtonLabel.textContent = 'Next';
+          if (dashNextButtonIcon) dashNextButtonIcon.textContent = '›';
+        }
+      }
+
       function setSubmitting(submitting) {
         isSubmitting = submitting;
 
@@ -2457,6 +2793,20 @@
             automationSubmitButton.classList.remove('opacity-60', 'cursor-wait');
             automationSubmitButton.textContent = 'Submit request';
           }
+        } else if (activeForm === 'dashboard') {
+          if (dashBackButton) dashBackButton.disabled = dashboardCurrentStep === 1 || submitting;
+          if (dashNextButton) dashNextButton.disabled = submitting;
+          if (dashSubmitButton) dashSubmitButton.disabled = submitting;
+
+          if (dashSubmitButton) {
+            if (submitting) {
+              dashSubmitButton.classList.add('opacity-60', 'cursor-wait');
+              dashSubmitButton.textContent = 'Submitting…';
+            } else {
+              dashSubmitButton.classList.remove('opacity-60', 'cursor-wait');
+              dashSubmitButton.textContent = 'Submit request';
+            }
+          }
         } else if (activeForm === 'cqms') {
           cqmsBackButton.disabled = cqmsCurrentStep === 1 || submitting;
           cqmsNextButton.disabled = submitting;
@@ -2480,6 +2830,9 @@
         } else if (activeForm === 'automation') {
           steps = automationSteps;
           currentStep = automationCurrentStep;
+        } else if (activeForm === 'dashboard') {
+          steps = dashboardSteps;
+          currentStep = dashboardCurrentStep;
         } else if (activeForm === 'cqms') {
           steps = cqmsSteps;
           currentStep = cqmsCurrentStep;
@@ -2558,6 +2911,22 @@
         }
       });
 
+      if (dashBackButton) {
+        dashBackButton.addEventListener('click', () => {
+          if (dashboardCurrentStep > 1) {
+            updateDashboardStep(dashboardCurrentStep - 1);
+          }
+        });
+      }
+      if (dashNextButton) {
+        dashNextButton.addEventListener('click', () => {
+          if (!validateCurrentStep()) return;
+          if (dashboardCurrentStep < dashboardSteps.length) {
+            updateDashboardStep(dashboardCurrentStep + 1);
+          }
+        });
+      }
+
       // Form submissions
       sessionForm.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -2582,15 +2951,7 @@
 
         try {
           setSubmitting(true);
-          if (!SUBMIT_ENDPOINT || !SUBMIT_ENDPOINT.startsWith('http')) {
-            throw new Error('Submit endpoint is not configured.');
-          }
-
-          await fetch(SUBMIT_ENDPOINT, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify(payload),
-          });
+          await sendFormPayload(payload);
 
           successToast.classList.remove('opacity-0');
           successToast.classList.add('opacity-100');
@@ -2640,15 +3001,7 @@
 
         try {
           setSubmitting(true);
-          if (!SUBMIT_ENDPOINT || !SUBMIT_ENDPOINT.startsWith('http')) {
-            throw new Error('Submit endpoint is not configured.');
-          }
-
-          await fetch(SUBMIT_ENDPOINT, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify(payload),
-          });
+          await sendFormPayload(payload);
 
           successToast.classList.remove('opacity-0');
           successToast.classList.add('opacity-100');
@@ -2672,6 +3025,49 @@
         }
       });
 
+      if (dashboardForm) {
+        dashboardForm.addEventListener('submit', async (event) => {
+          event.preventDefault();
+          if (isSubmitting) return;
+          if (!validateCurrentStep()) return;
+
+          const formData = new FormData(dashboardForm);
+          const payload = { formType: 'dashboard' };
+
+          formData.forEach((value, key) => {
+            if (payload[key] === undefined) {
+              payload[key] = value;
+            } else if (Array.isArray(payload[key])) {
+              payload[key].push(value);
+            } else {
+              payload[key] = [payload[key], value];
+            }
+          });
+
+          try {
+            setSubmitting(true);
+            await sendFormPayload(payload);
+
+            successToast.classList.remove('opacity-0');
+            successToast.classList.add('opacity-100');
+
+            setTimeout(() => {
+              successToast.classList.remove('opacity-100');
+              successToast.classList.add('opacity-0');
+            }, 3200);
+
+            dashboardForm.reset();
+            dashboardCurrentStep = 1;
+            updateDashboardStep(1);
+          } catch (error) {
+            console.error('Error submitting form', error);
+            alert('Something went wrong while submitting. Please check the browser console for details or contact the team.');
+          } finally {
+            setSubmitting(false);
+          }
+        });
+      }
+
       // Option button handlers - using event delegation as fallback
       document.addEventListener('click', (e) => {
         const target = e.target.closest('[data-option]');
@@ -2688,6 +3084,10 @@
           e.preventDefault();
           automationCurrentStep = 1;
           showForm('automation');
+        } else if (option === 'dashboard') {
+          e.preventDefault();
+          dashboardCurrentStep = 1;
+          showForm('dashboard');
         } else if (option === 'cqms') {
           e.preventDefault();
           cqmsCurrentStep = 1;
@@ -2718,6 +3118,14 @@
         console.error('optionAutomation element not found');
       }
 
+      if (optionDashboard) {
+        optionDashboard.addEventListener('click', (e) => {
+          e.preventDefault();
+          dashboardCurrentStep = 1;
+          showForm('dashboard');
+        });
+      }
+
       if (optionCqms) {
         optionCqms.addEventListener('click', (e) => {
           e.preventDefault();
@@ -2735,6 +3143,7 @@
         // Reset forms
         sessionCurrentStep = 1;
         automationCurrentStep = 1;
+        dashboardCurrentStep = 1;
         cqmsCurrentStep = 1;
       });
 
@@ -2908,15 +3317,7 @@
 
         try {
           setSubmitting(true);
-          if (!SUBMIT_ENDPOINT || !SUBMIT_ENDPOINT.startsWith('http')) {
-            throw new Error('Submit endpoint is not configured.');
-          }
-
-          await fetch(SUBMIT_ENDPOINT, {
-            method: 'POST',
-            mode: 'no-cors',
-            body: JSON.stringify(payload),
-          });
+          await sendFormPayload(payload);
 
           successToast.classList.remove('opacity-0');
           successToast.classList.add('opacity-100');
@@ -2938,7 +3339,7 @@
       });
 
       // Custom platform checkbox handler
-      autoPlatformOther.addEventListener('change', () => {
+      if (autoPlatformOther) autoPlatformOther.addEventListener('change', () => {
         if (autoPlatformOther.checked) {
           customPlatformsContainer.classList.remove('hidden');
           if (customPlatformsList.children.length === 0) {
@@ -2952,7 +3353,7 @@
       });
 
       // Add custom platform button
-      addCustomPlatformBtn.addEventListener('click', addCustomPlatformInput);
+      if (addCustomPlatformBtn) addCustomPlatformBtn.addEventListener('click', addCustomPlatformInput);
 
       // Conditional logic for session form
       const teamSuggestedSelect = document.getElementById('automationFocus');
